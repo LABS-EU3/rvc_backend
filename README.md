@@ -41,6 +41,8 @@ The aim of this project is to make cooking fun, seamless, and most importantly p
 
 ### **Additional Features**:
   - dotEnv
+  - bcryptjs
+  - cors
   - helmet
   - cross-env
   - jest
