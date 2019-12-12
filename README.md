@@ -1,7 +1,7 @@
 # ForkBook Backend
 ## Recipe Version Control
 
-This is the backend code for the ForkBook application, you can find the latest deploy here: 
+This is the backend code for the ForkBook application, you can find the latest deploy here: forkbook.co
 
 ## **Team**
 
@@ -16,13 +16,12 @@ The aim of this project is to make cooking fun, seamless, and most importantly p
 
 ### **Basic Features**
 
-- User should be able to sign up and login
-- User should be able to easily create a recipe
-- User should be able to view recipes
-- User should be able to save a (reference) recipe to their cookbook
-- User should be able to view their cookbook
-
-- User should be able to create a new version of a recipe
+  - User should be able to sign up and login
+  - User should be able to easily create a recipe
+  - User should be able to view recipes
+  - User should be able to save a (reference) recipe to their cookbook
+  - User should be able to view their cookbook
+  - User should be able to create a new version of a recipe
 
 ### **Advanced Features**
 
@@ -41,7 +40,6 @@ The aim of this project is to make cooking fun, seamless, and most importantly p
   - PostgreSQL
 
 ### **Additional Features**:
-  - eslint
   - dotEnv
   - helmet
   - cross-env
@@ -60,7 +58,23 @@ DB_ENV = This will indicate the environment of the database
 
 ## **Folder Structure**
 
-![folder structure](https://i.imgur.com/zDQyQgE.png)
+![folder structure](https://i.imgur.com/BYTLxPb.png)
+
+## Code Styling Conventions
+  - Tab Size: 2
+  - Use the single quote `‘`
+  - Always export objects even if only one function is being exported
+  - Always name your files accordingly
+  - Only one index.js can exist and must be top level
+  - `Async/Await` instead of `.then()` etc…
+
+## Code Guidelines
+  - TDD is preferable but Test as soon as possible once you finish something
+  - Write middlewares to validate as much as possible
+  - Always spin the server with debugger, unless you need to use nodemon
+  - Install postgreSQL locally and pgAdmin too!
+  - **Never work on the same file!**
+
 
 ## NPM Commands
 
@@ -84,11 +98,8 @@ DB_ENV = This will indicate the environment of the database
   - [x] Description: VS Code plugin for prettier/prettier
   - [x] Version: 1.9.0
   - [x] Publisher: Esben Petersen
-  - [x] VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+  - [x] [VS Marketplace Link](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-- Head over to the VS-Code settings and search for prettier
-
-- Locate and tick the checkbox under `Prettier: Eslint Integration` section... You good to go! :sunglasses:
 
 # Contributing
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change
@@ -117,3 +128,9 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - Ensure that your code conforms to our existing code conventions and test coverage.
 - Include the relevant issue number, if applicable.
 - You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the reviewer to merge it for you.
+
+## Documentation
+See [Frontend Documentation]() for details on the frontend of our project.
+
+### Attribution
+These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
