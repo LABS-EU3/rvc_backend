@@ -141,7 +141,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
 ## Documentation
-See [Frontend Documentation]() for details on the frontend of our project.
+See [Frontend Documentation](https://github.com/LABS-EU3/rvc_frontend/blob/develop/README.md) for details on the frontend of our project.
 
 ### Attribution
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
