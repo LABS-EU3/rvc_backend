@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
 function hashPassword(req, res, next) {
     if (req.body && req.body.password) {
@@ -6,7 +6,7 @@ function hashPassword(req, res, next) {
         req.credentials = { ...req.body, password };
         next();
     } else {
-        res.status(401).json({ message: "REQUIRED FIELD 'PASSWORD' MISSING" })
+        res.status(401).json({ message: 'REQUIRED FIELD "PASSWORD" MISSING' })
     }
 }
 

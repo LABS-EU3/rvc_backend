@@ -1,4 +1,4 @@
-const auth = require("../models/auth-models");
+const auth = require('../models/auth-models');
 
 async function register(req, res) {
     try {
@@ -6,7 +6,7 @@ async function register(req, res) {
         res.status(201).json(result)
     } catch (error) {
         res.status(500).json({
-            message: "Something went wrong, try again in a few minutes",
+            message: 'Something went wrong, try again in a few minutes',
             error
         });
     }
@@ -18,7 +18,7 @@ async function login(req, res) {
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
-            message: "Something went wrong, try again in a few minutes",
+            message: 'Something went wrong, try again in a few minutes',
             error
         });
     }

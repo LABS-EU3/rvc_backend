@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 function generateToken(data){
     const payload = {
@@ -6,7 +6,7 @@ function generateToken(data){
     }
 
     const options = {
-        expiresIn: "60d"
+        expiresIn: '60d'
     }
 
     const secret = process.env.SECRET;
