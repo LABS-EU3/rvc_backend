@@ -15,5 +15,13 @@ describe('recipes-model', () => {
 
       expect(actualHistoryOfRecipeFive).toEqual(expectedHistoryOfRecipeFive);
     });
+
+    it('should return an array containing a single recipe if the id supplied is the id of a root', async () => {
+      const expectedHistoryOfRecipeOne = [{ id: 1, name: 'sweet crepes', parent_id: 1 }];
+
+      const actualHistoryOfRecipeOne = await Recipes.getHistory(1);
+
+      expect(actualHistoryOfRecipeOne).toEqual(expectedHistoryOfRecipeOne);
+    });
   })
 })
