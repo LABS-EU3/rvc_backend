@@ -26,6 +26,33 @@ describe('recipes-model', () => {
   });
 
   describe('getRelatives(id, order, maxLength)', () => {
+    it('should return a sorted array of first-order relatives', async () => {      
+      const expected1stOrderRelativesOfRecipeTwo = [
+        {id: 1, name: 'sweet crepes', parent_id: 1},
+        {id: 3, name: 'blueberry pancakes', parent_id: 2},
+        {id: 5, name: 'chocolate chip pancakes', parent_id: 2},
+        {id: 6, name: 'banana pancakes', parent_id: 2}
+      ];
 
+      const actual1stOrderRelativesOfRecipeTwo = await Recipes.getRelatives(2, 1);
+
+      expect(actual1stOrderRelativesOfRecipeTwo).toEqual(expected1stOrderRelativesOfRecipeTwo);
+    });
+
+    it('should return a sorted array of second-order relatives', async () => {
+      const expected2ndOrderRelativesOfRecipeTwo = [
+        {id: 1, name: 'sweet crepes', parent_id: 1},
+        {id: 3, name: 'blueberry pancakes', parent_id: 2},
+        {id: 4, name: 'mini pancakes', parent_id: 1},
+        {id: 5, name: 'chocolate chip pancakes', parent_id: 2},
+        {id: 6, name: 'banana pancakes', parent_id: 2},
+        {id: 8, name: 'wild berry pancakes', parent_id: 3},
+        {id: 9, name: 'savoury crepes', parent_id: 1}
+      ];
+
+      const actual2ndOrderRelativesOfRecipeTwo = await Recipes.getRelatives(2, 2);
+
+      expect(actual2ndOrderRelativesOfRecipeTwo).toEqual(expected2ndOrderRelativesOfRecipeTwo);
+    });
   })
 })
