@@ -3,7 +3,7 @@ const db = require('../../../test-database/db-config');
 module.exports = {
   find,
   getHistory,
-  getRelatives
+  // getRelatives
 }
 
 function find() {
@@ -21,7 +21,7 @@ async function getHistory(id) {
   let history = [currentRecipe];
 
   while (currentRecipe.parent_id !== currentRecipe.id) {
-    const parent = await findById(recipe.parent_id);
+    const parent = await findById(currentRecipe.parent_id);
     currentRecipe = parent;
     history.push(currentRecipe);
   }
