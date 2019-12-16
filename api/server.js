@@ -1,21 +1,24 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const helmet = require('helmet')
-const recipeRoute = require('../rest-api/recipe/route/recipe-route')
-const userRoute = require('../rest-api/user/route/user-route')
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
 
-const server = express()
+const server = express();
 
-server.use(express.json())
-server.use(cors())
-server.use(helmet())
-server.use('/recipe', recipeRoute)
-server.use('/user', userRoute)
+server.use(express.json());
+server.use(cors());
+server.use(helmet());
 
+// Routes Import
+const recipeRoute = require("../rest-api/recipe/routes/recipe-routes");
+const userRoute = require("../rest-api/user/routes/user-routes");
 
-server.get('/', (req, res) => {
-    res.json('just cook it')
-})
+// Routes Use
+server.use("/recipe", recipeRoute);
+server.use("/user", userRoute);
 
-module.exports = server
+server.get("/", (req, res) => {
+  res.json("just cook it");
+});
+
+module.exports = server;
