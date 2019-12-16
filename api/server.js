@@ -14,8 +14,8 @@ const recipeRoute = require("../rest-api/recipe/routes/recipe-routes");
 const userRoute = require("../rest-api/user/routes/user-routes");
 
 // Routes Use
-server.use("/recipe", recipeRoute);
-server.use("/user", userRoute);
+server.use("/api/recipe", recipeRoute);
+server.use("/api/user", userRoute);
 
 server.get("/", (req, res) => {
   res.json("just cook it");
