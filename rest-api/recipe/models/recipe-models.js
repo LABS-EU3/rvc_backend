@@ -21,14 +21,10 @@ async function getHistory(id) {
   let history = [currentRecipe];
 
   while (currentRecipe.parent_id !== currentRecipe.id) {
-    const parent = await getParent(currentRecipe);
+    const parent = await findById(recipe.parent_id);
     currentRecipe = parent;
     history.push(currentRecipe);
   }
 
   return history;
-}
-
-function getParent(recipe) {
-  return findById(recipe.parent_id);
 }
