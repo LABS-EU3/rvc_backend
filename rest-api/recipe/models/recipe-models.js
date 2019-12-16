@@ -3,7 +3,7 @@ const db = require('../../../test-database/db-config');
 module.exports = {
   find,
   getHistory,
-  // getRelatives
+  getRelatives
 }
 
 function find() {
@@ -27,4 +27,16 @@ async function getHistory(id) {
   }
 
   return history;
+}
+
+async function getRelatives(id, order, max_length) {
+
+}
+
+async function getImmediateRelatives(id) {
+  const currentRecipe = await findById(id);
+  const parent = await findById(currentRecipe.parent_id);
+  const children = await db('recipes').where({ 'parent_id': id });
+
+  return [...parent, ...children].sort((id1, id2) => id1 - id2);
 }

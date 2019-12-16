@@ -9,7 +9,7 @@ describe('recipes-model', () => {
         {id: 5, name: 'chocolate chip pancakes', parent_id: 2},
         {id: 2, name: 'pancakes', parent_id: 1},
         {id: 1, name: 'sweet crepes', parent_id: 1}
-      ]
+      ];
 
       const actualHistoryOfRecipeFive = await Recipes.getHistory(5);
 
@@ -23,5 +23,9 @@ describe('recipes-model', () => {
 
       expect(actualHistoryOfRecipeOne).toEqual(expectedHistoryOfRecipeOne);
     });
+  });
+
+  describe('getRelatives(id, order, maxLength)', () => {
+
   })
 })
