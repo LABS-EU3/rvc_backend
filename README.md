@@ -1,3 +1,18 @@
+# db-algorithm-test branch notes:
+
+**DO NOT MERGE THIS BRANCH!** It exists for testing purposes only.
+
+Specifically, it exists to test out some core graph traversal algorithms. These are implemented in *rest-api/recipe/models/recipe-models.js*. Tests of these algorithms can be found in the same folder.
+
+The data seeded, and used for testing, resembles the below graph, taken from https://trello.com/c/SWd1y3aX/22-tree-scan-recursive-algorithm.
+
+<img src="https://i.imgur.com/KZX94Ry.png" width = "500" />
+
+
+(Note: The following was present before branching out. It may be out of date!)
+
+___
+
 # ForkBook Backend
 ## Recipe Version Control
 
