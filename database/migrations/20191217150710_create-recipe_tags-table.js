@@ -5,16 +5,14 @@ exports.up = async function(knex) {
             .integer('recipe_id')
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable('recipes')
+            .references('id').inTable('recipes')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         tbl
             .integer('tag_id')
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable('tags')
+            .references('id').inTable('tags')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         tbl

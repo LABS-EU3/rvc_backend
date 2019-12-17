@@ -19,8 +19,7 @@ exports.up = async function(knex, Promise) {
             .integer('user_id')
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable('users')
+            .references('id').inTable('users')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
     })

@@ -5,16 +5,14 @@ exports.up = async function(knex) {
             .integer('video_id')
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable('videos')
+            .references('id').inTable('videos')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         tbl
             .integer('recipe_id')
             .unsigned()
             .notNullable()
-            .references('id')
-            .inTable('recipes')
+            .references('id').inTable('recipes')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         tbl
