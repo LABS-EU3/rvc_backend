@@ -5,7 +5,7 @@ exports.up = async function(knex, Promise) {
         tbl.string('username').notNullable().unique();
         tbl.string('email').notNullable().unique();
         tbl.string('password').notNullable();
-        tbl.timestamp('created_at', { useTz: true });
+        tbl.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   })
 };
 
