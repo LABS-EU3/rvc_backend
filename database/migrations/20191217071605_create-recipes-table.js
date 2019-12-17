@@ -4,21 +4,21 @@ exports.up = async function(knex) {
         tbl
             .increments();
         tbl
-            .string('title')
+            .text('title')
             .notNullable();
         tbl
-            .string('description', 500)
+            .text('description')
             .notNullable();
         tbl
-            .string('instructions')
+            .text('instructions')
             .notNullable();
         tbl
-            .datetime('time_required', { precision: 6 })
-            .defaultTo(knex.fn.now(6))
+            .specificType('time_required', 'SMALLINT')
             .notNullable();
         tbl
-            .string('difficulty')
-            .notNullable();
+            .integer('difficulty')
+            .notNullable()
+            .unsigned();
         tbl
             .integer('budget')
             .notNullable()
