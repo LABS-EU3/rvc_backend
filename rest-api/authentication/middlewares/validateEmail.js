@@ -1,4 +1,3 @@
-const db = require("../../../database/dbConfig");
 
 function validator(email){
     const lowerCaseEmail = String(email).toLowerCase()
