@@ -1,14 +1,14 @@
 const cleaner = require('knex-cleaner');
 
 exports.seed = function(knex) {
-  return knex('ingredients').truncate()
-    .then(() => knex('units').truncate())
-    .then(() => knex('recipe_ingredients').truncate())
-    .then(() => knex('profile_info').truncate())
-    .then(() => knex('likes').truncate())
-    .then(() => knex('recipes').truncate())
+  return knex('recipe_ingredients').del()
+    .then(() => knex('units').del())
+    .then(() => knex('ingredients').del())
+    .then(() => knex('profile_info').del())
+    .then(() => knex('likes').del())
+    .then(() => knex('recipes').del())
     .then(() => {
-      return cleaner.clean(knex, { // deals with _users_
+      return cleaner.clean(knex, { // deals with _users_*
         mode: 'truncate',
         restartIdentity: true, // used to tell PostgresSQL to reset the ID counter
         ignoreTables: ['knex_migrations', 'knex_migrations_lock']
@@ -17,3 +17,5 @@ exports.seed = function(knex) {
 };
 
 // Can expand the above once we add more tables!
+
+// *users is last because every other table references a foreign key!
