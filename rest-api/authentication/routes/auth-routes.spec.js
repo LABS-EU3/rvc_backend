@@ -20,6 +20,12 @@ const register = {
     password: 'password'
 }
 
+const unregistredAccount = {
+    email: random('email'),
+    username: random(),
+    password: 'password'
+}
+
 
 // Add Register
 
@@ -49,10 +55,10 @@ describe('POST /api/auth/register', () => {
 
     it('Create a new user with existing email', () => {
         return request(server)
-        .post('/api/auth/register')
-        .send({...register, username: 'somerandomusername'})
-        .expect(400)
-        .expect('Content-Type', /json/)
+            .post('/api/auth/register')
+            .send({ ...register, username: 'somerandomusername' })
+            .expect(400)
+            .expect('Content-Type', /json/)
             .then(res => {
                 expect(res.body.error).toBe(`Email ${register.email} is already in use`)
             })
@@ -60,13 +66,40 @@ describe('POST /api/auth/register', () => {
 
     it('Create a new user with existing username', () => {
         return request(server)
-        .post('/api/auth/register')
-        .send({...register, email: 'testing@user.com'})
-        .expect(400)
-        .expect('Content-Type', /json/)
+            .post('/api/auth/register')
+            .send({ ...register, email: 'testing@user.com' })
+            .expect(400)
+            .expect('Content-Type', /json/)
             .then(res => {
                 expect(res.body.error).toBe(`Username ${register.username} is already in use`)
             })
     })
 
 })
+
+// Add Register
+describe('POST /api/auth/login', () => {
+    it('Login Test user', () => {
+        return request(server)
+            .post('/api/auth/login')
+            .send(register)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then(res => {
+                expect(typeof res.body === 'object').toBe(true)
+                expect(typeof res.body.username).toBe('string')
+                expect(typeof res.body.id).toBe('number')
+            })
+    })
+
+    it('Login wrong credentials', () => {
+        return request(server)
+            .post('/api/auth/login')
+            .send(unregistredAccount)
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body.error).toMatch('Your email or password is incorrect')
+            })
+    })
+});
