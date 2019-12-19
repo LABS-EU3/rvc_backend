@@ -1,17 +1,17 @@
 const db = require('../../../database/dbConfig')
 
 module.exports = {
-    findAll,
-    findBy,
+    findAllIngredients,
+    findIngredientBy,
     addIngredient
 }
 
-async function findAll() {
+async function findAllIngredients() {
     const ingredients = await db('ingredients');
     return ingredients;
 }
 
-async function findBy(info) {
+async function findIngredientBy(info) {
     const ingredient = await db('ingredients')
         .where({ id: info })
         .orWhere({ name: info });
