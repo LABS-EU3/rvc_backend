@@ -3,7 +3,7 @@
 exports.seed = function(knex) {
   return knex('recipes').insert([
     {
-      title: 'Sweet Crepes',
+      title: 'Sweet Crepes', //1
       description: "Sweet, sweet crepes. Good with a light dusting of icing sugar and a few drops from a squeezed lemon.",
       instructions: JSON.stringify([
         'Whisk the eggs, flour, sugar and salt until combined. Gradually add the milk and whisk until you get a smooth batter. Let stand for 15 minutes.',
@@ -18,7 +18,7 @@ exports.seed = function(knex) {
       created_at: '2019-05-13 20:30:17-02' // Not sure on the formatting here, but I'm following: http://www.postgresqltutorial.com/postgresql-timestamp/
     },
     {
-      title: 'Pancakes',
+      title: 'Pancakes', //2
       description: 'Easy, American-style, fluffy pancakes are great for feeding a crowd at breakfast or brunch.',
       instructions: JSON.stringify([
         'Mix the flour, baking powder, caster sugar and a pinch of salt together in a large bowl...',
@@ -33,7 +33,7 @@ exports.seed = function(knex) {
       created_at: '2019-05-15 14:12:00-04'
     },
     {
-      title: 'Banana Pancakes',
+      title: 'Banana Pancakes', //3
       description: 'Fluffy on the inside, crispy on the outside and delicately flavored with bananas, these are phenomenal banana pancakes.',
       instructions: JSON.stringify([
         'In a medium bowl, whisk together the flour, sugar, baking powder and salt.',
@@ -49,7 +49,7 @@ exports.seed = function(knex) {
       created_at: '2019-06-01 13:04:34-04'
     },
     {
-      title: 'Mini Crepes',
+      title: 'Mini Crepes', //4
       description: 'Crepes are age-old breakfast traditions but they’re great for anytime of the day! This is a very basic no-fail wheat flour crepes recipe.',
       instructions: JSON.stringify([
         'In a bowl whisk the flour with the eggs then add in the milk and the water and mix until well combined.',
@@ -65,7 +65,7 @@ exports.seed = function(knex) {
       created_at: '2019-06-01 15:34:47-02'
     },
     {
-      title: 'Blueberry Pancakes',
+      title: 'Blueberry Pancakes', //5
       description: 'Light, fluffy and fruity, these pancakes are a US classic.',
       instructions: JSON.stringify([
         'Mix together 200g self-raising flour, 1 tsp baking powder and a pinch of salt in a large bowl.',
@@ -85,7 +85,7 @@ exports.seed = function(knex) {
       created_at: '2019-06-05 10:00:00-04'
     },
     {
-      title: 'Maple Pancakes',
+      title: 'Maple Pancakes', //6
       description: 'Like regular pancakes, but made with maple batter.',
       instructions: JSON.stringify([
         'Mix the flour, baking powder, maple syrup, caster sugar and a pinch of salt together in a large bowl...',
@@ -100,7 +100,7 @@ exports.seed = function(knex) {
       created_at: '2019-06-06 11:49:59-04'
     },
     {
-      title: 'Pancake Cookies',
+      title: 'Pancake Cookies', //7
       description: 'Like mini crepes, except thicker and baked like cookies.',
       instructions: JSON.stringify([
         'Preheat the oven to 350°C.',
@@ -117,7 +117,7 @@ exports.seed = function(knex) {
       created_at: '2019-08-01 15:32:38-04'
     },
     {
-      title: 'Nutella and Banana Pancakes',
+      title: 'Nutella and Banana Pancakes', //8
       description: 'Like banana pancakes, with nutella.',
       instructions: JSON.stringify([
         'In a medium bowl, whisk together the flour, sugar, baking powder and salt.',
@@ -133,7 +133,7 @@ exports.seed = function(knex) {
       created_at: '2019-08-23 08:49:00-04'
     },
     {
-      title: 'Savoury Crepes',
+      title: 'Savoury Crepes', //9
       description: 'Crepes for those with less of a sweet tooth.',
       instructions: JSON.stringify([
         'Whisk the eggs, flour, and salt until combined. Gradually add the milk and whisk until you get a smooth batter. Let stand for 15 minutes.',
@@ -148,7 +148,7 @@ exports.seed = function(knex) {
       created_at: '2019-09-01 12:00:00'
     },
     {
-      title: 'Chapatis',
+      title: 'Chapatis', //10
       description: 'This traditional Indian side dish is easier than you think and only takes a handful of ingredients',
       instructions: JSON.stringify([
         'In a large bowl, stir together the flours and salt. Use a wooden spoon to stir in the olive oil and enough water to make a soft dough that is elastic but not sticky.',
@@ -164,7 +164,7 @@ exports.seed = function(knex) {
       created_at: '2019-09-03 15:35:42'
     },
     {
-      title: 'Roti',
+      title: 'Roti', //11
       description: 'An authentic roti bread recipe, brilliant to serve with curries, making a good alternative to rice.',
       instructions: JSON.stringify([
         'Sift the flour and salt into a large bowl. Sprinkle over the oil, and add enough water to make a soft dough (about 140ml/4½fl oz) – add a little more flour or water if needed. Knead gently until smooth. Cover and leave to rest for about 30 minutes.',
@@ -180,7 +180,7 @@ exports.seed = function(knex) {
       created_at: '2019-09-04 10:03:20'
     },
     {
-      title: 'Tortillas',
+      title: 'Tortillas', //12
       description: 'A small change to savoury crepes makes lovely tortillas!',
       instructions: JSON.stringify([
         'In a large bowl, combine flour and salt. Stir in water and oil. Turn onto a floured surface; knead 10-12 times, adding a little flour or water if needed to achieve a smooth dough. Let rest for 10 minutes.',
@@ -196,7 +196,7 @@ exports.seed = function(knex) {
       created_at: '2019-09-05 12:00:00'
     },
     {
-      title: 'Fajitas',
+      title: 'Fajitas', //13
       description: 'Fajitas are a fun meal to cook for the family. Try topping with homemade salsa to make them extra delicious.',
       instructions: JSON.stringify([
         'Preheat the oven to 180C/160C Fan/Gas 4.',
@@ -213,7 +213,7 @@ exports.seed = function(knex) {
       created_at: '2019-10-09 12:30:00'
     },
     {
-      title: 'Beef Burritos',
+      title: 'Beef Burritos', //14
       description: 'Make these easy beef burritos for a simple midweek supper. The meat filling is also great stuffed into a crispy taco, or as an easy chilli con carne with rice',
       instructions: JSON.stringify([
         'Heat the oil in a large pan – a casserole is ideal. Fry the onions for 8 mins, then add the garlic, spices and oregano and cook for 1 min. Crumble over the mince and sizzle for 5 mins, stirring, until browned. Stir in the sugar and leave for a minute, then splash in the vinegar and pour in the tomatoes.',
@@ -228,7 +228,7 @@ exports.seed = function(knex) {
       created_at: '2019-10-30 22:47:02'
     },
     {
-      title: 'Enchiladas',
+      title: 'Enchiladas', //15
       description: 'You can make the sauce ahead of time for these chicken enchiladas, served with coriander, avocado and soured cream.',
       instructions: JSON.stringify([
         'Start by making the enchilada sauce. Put the onion into a medium saucepan with the olive oil and cook over a low-medium heat for 7–8 minutes, or until soft and just starting to brown at the edges.',
@@ -250,7 +250,7 @@ exports.seed = function(knex) {
       created_at: '2019-11-17 18:24:42'
     },
     {
-      title: 'Soft Shell Tacos',
+      title: 'Soft Shell Tacos', //16
       description: 'Make your own tortillas – simple as anything – then add spicy beef, refried beans, guacamole, salsa and a quick red onion pickle for a Mexican feast.',
       instructions: JSON.stringify([
         'To make the red onion pickle, put the vinegar, sugar and salt in a small saucepan, cover with cold water and bring to the boil. Take the pan off the heat and add the onion. Leave to stand for 30–60 minutes. Drain well before serving.',
