@@ -10,7 +10,7 @@ function register(user) {
             delete user.password;
             delete user.email;
             delete user.created_at;
-            const token = generateToken(user)
+            const token = generateToken(user);
             return { ...user, token }
         })
 }
@@ -28,7 +28,7 @@ function login(credentials) {
                 delete user.password;
                 delete user.email;
                 delete user.created_at;
-                const token = generateToken(user)
+                const token = generateToken(user);
                 return { ...user, token }
             } else {
                 return { error: 'Your email or password is incorrect' }
