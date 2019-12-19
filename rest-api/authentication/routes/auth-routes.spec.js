@@ -21,24 +21,52 @@ const register = {
 }
 
 
-describe("POST /api/auth/register", () => {
-    it("Create a new User and return ", () => {
+// Add Register
+
+describe('POST /api/auth/register', () => {
+    it('Create a new User and return ', () => {
         return request(server)
-            .post("/api/auth/register")
+            .post('/api/auth/register')
             .send(register)
             .expect(201)
-            .expect("Content-Type", /json/)
+            .expect('Content-Type', /json/)
             .then(res => {
-                expect(typeof res.body === "object").toBe(true)
-                expect(typeof res.body.username).toBe("string")
-                expect(typeof res.body.id).toBe("number")
+                expect(typeof res.body === 'object').toBe(true)
+                expect(typeof res.body.username).toBe('string')
+                expect(typeof res.body.id).toBe('number')
             })
     })
 
-    it("Test wrong entry", () => {
+    it('Send empty body', () => {
         return request(server)
-            .post("/api/auth/register")
-            .send("t")
+            .post('/api/auth/register')
+            .send()
             .expect(400)
+            .then(res => {
+                expect(res.body.error).toBe('req.body is empty.')
+            })
     })
+
+    it('Create a new user with existing email', () => {
+        return request(server)
+        .post('/api/auth/register')
+        .send({...register, username: 'somerandomusername'})
+        .expect(400)
+        .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body.error).toBe(`Email ${register.email} is already in use`)
+            })
+    })
+
+    it('Create a new user with existing username', () => {
+        return request(server)
+        .post('/api/auth/register')
+        .send({...register, email: 'testing@user.com'})
+        .expect(400)
+        .expect('Content-Type', /json/)
+            .then(res => {
+                expect(res.body.error).toBe(`Username ${register.username} is already in use`)
+            })
+    })
+
 })
