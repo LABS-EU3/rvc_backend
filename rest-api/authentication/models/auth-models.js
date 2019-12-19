@@ -24,7 +24,6 @@ function login(credentials) {
         .then(user => {
             if (user && bcrypt.compareSync(credentials.password, user.password)) {
                 delete user.password;
-                delete user.email;
                 const token = generateToken(user);
                 return { ...user, token }
             } else {
