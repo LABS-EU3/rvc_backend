@@ -4,7 +4,8 @@
   "description": "This is the backend code for the ForkBook application, you can find the latest deploy here: forkbook.co",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "coverage": "cross-env DB_ENV=testing jest --coverage",
     "start": "node index.js",
     "server": "nodemon index.js"
   },
