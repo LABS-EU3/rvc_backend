@@ -19,17 +19,3 @@ exports.seed = function(knex) {
     },
   ])
 };
-
-// return knex('recipes').insert([
-//   {
-//     title: 'sweet crepes',
-//     description:,
-//     instructions:,
-//     time_required:,
-//     difficulty:,
-//     budget:,
-//     user_id:,
-//     parent_id: 1,
-//     created_at:
-//   },
-// ]);
