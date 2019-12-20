@@ -6,12 +6,12 @@ module.exports = {
 
 async function getRecipes() {
     const recipes = await db('recipes as r')
-        .join(
+        .leftJoin(
             'recipe_images as rim',
             'rim.recipe_id',
             'r.id'
         )
-        .join(
+        .leftJoin(
             'images as i',
             'i.id',
             'rim.image_id'
@@ -31,22 +31,22 @@ async function getRecipes() {
 
 async function getRecipeById(id) {
     const recipe = await db('recipes as r')
-        .join(
+        .leftJoin(
             'recipe_images as rim',
             'rim.recipe_id',
             'r.id'
         )
-        .join(
+        .leftJoin(
             'images as i',
             'i.id',
             'rim.image_id'
         )
-        .join(
+        .leftJoin(
             'recipe_categories as rc',
             'rc.recipe_id',
             'r.id'
         )
-        .join(
+        .leftJoin(
             'categories as c',
             'c.id',
             'rc.category_id'
