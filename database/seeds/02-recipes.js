@@ -254,7 +254,7 @@ exports.seed = function(knex) {
       description: 'Make your own tortillas – simple as anything – then add spicy beef, refried beans, guacamole, salsa and a quick red onion pickle for a Mexican feast.',
       instructions: JSON.stringify([
         'To make the red onion pickle, put the vinegar, sugar and salt in a small saucepan, cover with cold water and bring to the boil. Take the pan off the heat and add the onion. Leave to stand for 30–60 minutes. Drain well before serving.',
-        'To make the tortillas, place the flour and salt in a large bowl and gradually add the oil and 125ml/4fl oz water, stirring constantly until the mixture comes together to form a rough dough. Transfer to a lightly floured surface and knead for 5 minutes. Roll into a ball, wrap in cling film and chill for 30 minutes.',
+        'To make the tortillas, place the flour and salt in a large bowl and gradually add the oil and water, stirring constantly until the mixture comes together to form a rough dough. Transfer to a lightly floured surface and knead for 5 minutes. Roll into a ball, wrap in cling film and chill for 30 minutes.',
         'Etc.'
       ]),
       time_required: 65,

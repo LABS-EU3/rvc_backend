@@ -101,6 +101,23 @@ exports.seed = function(knex) {
     {recipe_id: 14, ingredient_id: 36, quantity: 200, unit_id: 3},
     {recipe_id: 14, ingredient_id: 29, quantity: 400, unit_id: 3},
     {recipe_id: 14, ingredient_id: 33, quantity: 12, unit_id: 1},
-    // {recipe_id: 15, ingredient_id: 26, quantity: 1, unit_id: 6}
+    {recipe_id: 15, ingredient_id: 17, quantity: 2, unit_id: 1},
+    {recipe_id: 15, ingredient_id: 36, quantity: 6, unit_id: 6},
+    {recipe_id: 15, ingredient_id: 19, quantity: 3, unit_id: 10},
+    {recipe_id: 15, ingredient_id: 24, quantity: 2, unit_id: 6},
+    {recipe_id: 15, ingredient_id: 25, quantity: 1, unit_id: 6},
+    {recipe_id: 15, ingredient_id: 26, quantity: 1, unit_id: 6},
+    {recipe_id: 15, ingredient_id: 27, quantity: 2, unit_id: 8},
+    {recipe_id: 15, ingredient_id: 23, quantity: 2, unit_id: 1},
+    {recipe_id: 15, ingredient_id: 37, quantity: 250, unit_id: 3},
+    {recipe_id: 15, ingredient_id: 33, quantity: 12, unit_id: 1},
+    {recipe_id: 15, ingredient_id: 38, quantity: 3, unit_id: 11},
+    {recipe_id: 16, ingredient_id: 34, quantity: 2, unit_id: 1},
+    {recipe_id: 16, ingredient_id: 30, quantity: 2, unit_id: 8},
+    {recipe_id: 16, ingredient_id: 3, quantity: 3, unit_id: 7},
+    {recipe_id: 16, ingredient_id: 4, quantity: 3, unit_id: 8},
+    {recipe_id: 16, ingredient_id: 2, quantity: 400, unit_id: 3},
+    {recipe_id: 16, ingredient_id: 8, quantity: 3, unit_id: 7},
+    {recipe_id: 16, ingredient_id: 11, quantity: 125, unit_id: 4}
   ]);
 };
