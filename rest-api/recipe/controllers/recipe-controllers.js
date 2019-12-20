@@ -12,10 +12,17 @@ async function getRecipes(req, res) {
       res.status(200).json(recipes);      
     }
     else {
-      res.status(404).json({message: 'There are no saved recipes'})
+      res
+        .status(404)
+        .json({ message: 'There are no saved recipes' })
     }
   } catch (error) {
-    res.status(500).json({ message: 'There was an error retrieving the saved recipes' });
+    res
+      .status(500)
+      .json({
+        message: 'There was an error retrieving the saved recipes',
+        error
+      });
   }
 }
 
@@ -26,6 +33,11 @@ async function getRecipeById(req, res) {
     res.status(200).json(recipe);
   }
   catch (error) {
-    res.status(500).json({message: 'There was an error getting the recipes of id ' + id })
+    res
+      .status(500)
+      .json({
+        message: 'There was an error getting the recipe of id ' + id,
+        error
+      })
   }
 }
