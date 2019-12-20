@@ -9,6 +9,8 @@ exports.seed = function(knex) {
     {name: 'tbsp'}, //6
     {name: 'tsp'}, //7
     {name: 'pinch'}, //8
-    {name: 'knob'} //9
+    {name: 'knob'}, //9
+    {name: 'cloves'}, //10
+    {name: 'handfull'} //11
   ]);
 };

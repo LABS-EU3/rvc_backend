@@ -34,6 +34,8 @@ exports.seed = function(knex) {
     {name: 'passata'}, //31
     {name: 'brown sugar'}, //32
     {name: 'flour tortillas'}, //33
-    {name: 'red onions'} //34
+    {name: 'red onions'}, //34,
+    {name: 'olive oil'}, //35
+    {name: 'black beans'} //36
   ]);
 };
