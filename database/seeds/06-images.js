@@ -16,6 +16,6 @@ exports.seed = function(knex) {
     {url: 'https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/chicken_fajitas_with_07231_16x9.jpg'}, //13
     {url: 'https://images-gmi-pmc.edge-generalmills.com/0342cc33-18fe-4a46-9701-d7d63cd0ffc8.jpg'}, //14
     {url: 'https://s23209.pcdn.co/wp-content/uploads/2019/01/Weeknight-Chicken-EnchiladasIMG_8178.jpg'}, //15
-    {url: 'https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Chicken-Soft-Tacos_EXPS_SCSCBZ17_32237_B03_08_4b.jpg'}, //16
+    {url: 'https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Chicken-Soft-Tacos_EXPS_SCSCBZ17_32237_B03_08_4b.jpg'} //16
   ]);
 };

@@ -16,6 +16,6 @@ exports.seed = function(knex) {
     {image_id: 13, recipe_id: 13},
     {image_id: 14, recipe_id: 14},
     {image_id: 15, recipe_id: 15},
-    {image_id: 16, recipe_id: 16},
+    {image_id: 16, recipe_id: 16}
   ]);
 };
