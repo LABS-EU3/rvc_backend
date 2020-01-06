@@ -3,7 +3,7 @@ exports.up = async function(knex) {
   await knex.schema
     .createTable('instructions', tbl => {
       tbl.increments();
-      tbl.string('text')
+      tbl.text('text')
         .notNullable();
       tbl.integer('number')
         .unsigned()
