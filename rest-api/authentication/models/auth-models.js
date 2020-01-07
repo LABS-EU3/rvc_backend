@@ -14,10 +14,10 @@ function register(user) {
 
 function login(credentials) {
     return db('users')
+    .select('username', 'id', 'password')
     // Notice in the two following lines of codes I have wrapped the object's value in a string template literal
     // This is in place to convert 'undefined' into a string
     // Why? The user can choose between using username or email to login, this will lead either field to be undefined
-        .select('username', 'id', 'password')
         .where('email', `${credentials.email}`)
         .orWhere('username', `${credentials.username}`)
         .first()
