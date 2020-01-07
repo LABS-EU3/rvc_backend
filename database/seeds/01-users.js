@@ -5,17 +5,17 @@ exports.seed = function(knex) {
     {
       username: 'admin',
       email: 'admin@forkbook.co',
-      password: bcrypt.hashSync('1234'),
+      password: bcrypt.hashSync('1234')
     },
     {
       username: 'user',
       email: 'user@email.com',
-      password: bcrypt.hashSync('password'),
+      password: bcrypt.hashSync('password')
     },
     {
       username: 'person',
       email: 'person@email.co.uk',
-      password: bcrypt.hashSync('5432'),
-    },
-  ])
+      password: bcrypt.hashSync('5432')
+    }
+  ]);
 };

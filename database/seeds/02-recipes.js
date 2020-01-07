@@ -4,7 +4,8 @@ exports.seed = function(knex) {
   return knex('recipes').insert([
     {
       title: 'Sweet Crepes', //1
-      description: "Sweet, sweet crepes. Good with a light dusting of icing sugar and a few drops from a squeezed lemon.",
+      description:
+        'Sweet, sweet crepes. Good with a light dusting of icing sugar and a few drops from a squeezed lemon.',
       time_required: 60,
       difficulty: 1,
       budget: 1,
@@ -14,7 +15,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Pancakes', //2
-      description: 'Easy, American-style, fluffy pancakes are great for feeding a crowd at breakfast or brunch.',
+      description:
+        'Easy, American-style, fluffy pancakes are great for feeding a crowd at breakfast or brunch.',
       time_required: 55,
       difficulty: 1,
       budget: 1,
@@ -24,7 +26,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Banana Pancakes', //3
-      description: 'Fluffy on the inside, crispy on the outside and delicately flavored with bananas, these are phenomenal banana pancakes.',
+      description:
+        'Fluffy on the inside, crispy on the outside and delicately flavored with bananas, these are phenomenal banana pancakes.',
       time_required: 30,
       difficulty: 1,
       budget: 1,
@@ -34,7 +37,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Mini Crepes', //4
-      description: 'Crepes are age-old breakfast traditions but they’re great for anytime of the day! This is a very basic no-fail wheat flour crepes recipe.',
+      description:
+        'Crepes are age-old breakfast traditions but they’re great for anytime of the day! This is a very basic no-fail wheat flour crepes recipe.',
       time_required: 45,
       difficulty: 1,
       budget: 1,
@@ -94,7 +98,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Chapatis', //10
-      description: 'This traditional Indian side dish is easier than you think and only takes a handful of ingredients',
+      description:
+        'This traditional Indian side dish is easier than you think and only takes a handful of ingredients',
       time_required: 45,
       difficulty: 2,
       budget: 1,
@@ -104,7 +109,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Roti', //11
-      description: 'An authentic roti bread recipe, brilliant to serve with curries, making a good alternative to rice.',
+      description:
+        'An authentic roti bread recipe, brilliant to serve with curries, making a good alternative to rice.',
       time_required: 50,
       difficulty: 2,
       budget: 1,
@@ -124,7 +130,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Fajitas', //13
-      description: 'Fajitas are a fun meal to cook for the family. Try topping with homemade salsa to make them extra delicious.',
+      description:
+        'Fajitas are a fun meal to cook for the family. Try topping with homemade salsa to make them extra delicious.',
       time_required: 75,
       difficulty: 2,
       budget: 2,
@@ -134,7 +141,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Beef Burritos', //14
-      description: 'Make these easy beef burritos for a simple midweek supper. The meat filling is also great stuffed into a crispy taco, or as an easy chilli con carne with rice',
+      description:
+        'Make these easy beef burritos for a simple midweek supper. The meat filling is also great stuffed into a crispy taco, or as an easy chilli con carne with rice',
       time_required: 50,
       difficulty: 2,
       budget: 2,
@@ -144,7 +152,8 @@ exports.seed = function(knex) {
     },
     {
       title: 'Enchiladas', //15
-      description: 'You can make the sauce ahead of time for these chicken enchiladas, served with coriander, avocado and soured cream.',
+      description:
+        'You can make the sauce ahead of time for these chicken enchiladas, served with coriander, avocado and soured cream.',
       time_required: 90,
       difficulty: 2,
       budget: 2,
@@ -154,13 +163,14 @@ exports.seed = function(knex) {
     },
     {
       title: 'Soft Shell Tacos', //16
-      description: 'Make your own tortillas – simple as anything – then add spicy beef, refried beans, guacamole, salsa and a quick red onion pickle for a Mexican feast.',
+      description:
+        'Make your own tortillas – simple as anything – then add spicy beef, refried beans, guacamole, salsa and a quick red onion pickle for a Mexican feast.',
       time_required: 65,
       difficulty: 2,
       budget: 2,
       user_id: 3,
       parent_id: 15,
       created_at: '2019-12-19 10:40:24'
-    },
+    }
   ]);
 };
