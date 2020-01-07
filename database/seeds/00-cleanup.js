@@ -7,6 +7,7 @@ exports.seed = function(knex) {
     .then(() => knex('recipe_videos').del())
     .then(() => knex('recipe_categories').del())
     .then(() => knex('recipe_tags').del())
+    .then(() => knex('recipe_instructions').del())
     .then(() => knex('profile_info').del())
     .then(() => knex('recipes').del())
     .then(() => {

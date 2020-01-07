@@ -5,9 +5,6 @@ exports.up = async function(knex) {
       tbl.increments();
       tbl.text('text')
         .notNullable();
-      tbl.integer('number')
-        .unsigned()
-        .notNullable();
     })
     .createTable('recipe_instructions', tbl => {
       tbl.integer('recipe_id')
