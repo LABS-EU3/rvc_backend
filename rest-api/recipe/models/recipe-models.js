@@ -24,10 +24,6 @@ async function getRecipes() {
 
 async function getRecipeById(id) {
   const recipe = await db('recipes')
-    .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
-    .leftJoin('images', 'images.id', 'recipe_images.image_id')
-    .leftJoin('recipe_categories', 'recipe_categories.recipe_id', 'recipes.id')
-    .leftJoin('categories', 'categories.id', 'recipe_categories.category_id')
     .select(
       'recipes.id',
       'recipes.title as recipe_title',
@@ -35,8 +31,6 @@ async function getRecipeById(id) {
       'recipes.time_required',
       'recipes.difficulty',
       'recipes.budget',
-      'images.url as image',
-      'categories.name as category'
     )
     .where('recipes.id', id)
     .first();
@@ -55,8 +49,20 @@ async function getRecipeById(id) {
   const tags = await db('recipe_tags')
     .join('recipes', 'recipes.id', 'recipe_tags.recipe_id')
     .join('tags', 'tags.id', 'recipe_tags.tag_id')
-    .select('recipes.title', 'tags.name as tag')
-    .where('recipes.id', id);
+    .select('tags.name')
+    .where('recipes.id', id)
+
+  const categories = await db('recipe_categories')
+  .join('recipes', 'recipes.id', 'recipe_categories.recipe_id')
+  .join('categories', 'categories.id', 'recipe_categories.category_id')
+  .select('categories.name')
+  .where('recipes.id', id)
+
+  const images = await db('recipe_images')
+  .join('recipes', 'recipes.id', 'recipe_images.recipe_id')
+  .join('images', 'images.id', 'recipe_images.image_id')
+  .select('images.url')
+  .where('recipes.id', id)
 
   const instructions = await db('recipe_instructions')
     .join(
@@ -67,7 +73,7 @@ async function getRecipeById(id) {
     .select('instructions.text', 'instructions.id')
     .where('recipe_instructions.recipe_id', id);
 
-  return { ...recipe, instructions, ingredients, tags, };
+  return { ...recipe, tags, categories, images, instructions, ingredients,};
 }
 
 async function addRecipeTransaction(body) {
