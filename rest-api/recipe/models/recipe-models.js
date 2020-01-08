@@ -10,9 +10,11 @@ async function getRecipes() {
   const recipes = await db('recipes')
     .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
     .leftJoin('images', 'images.id', 'recipe_images.image_id')
+    .leftJoin('users', 'users.id', 'recipes.user_id')
     .select(
       'recipes.id',
       'recipes.parent_id',
+      'users.username as author',
       'recipes.title as recipe_title',
       'recipes.description',
       'recipes.time_required',
@@ -25,9 +27,11 @@ async function getRecipes() {
 
 async function getRecipeById(id) {
   const recipe = await db('recipes')
+    .leftJoin('users', 'users.id', 'recipes.user_id')
     .select(
       'recipes.id',
       'recipes.parent_id',
+      'users.username as author',
       'recipes.title as recipe_title',
       'recipes.description',
       'recipes.time_required',
