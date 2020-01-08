@@ -41,17 +41,6 @@ async function getRecipeById(id) {
     .where('recipes.id', id)
     .first();
 
-  const ingredients = await db('recipe_ingredients')
-    .join('recipes', 'recipes.id', 'recipe_ingredients.recipe_id')
-    .join('ingredients', 'ingredients.id', 'recipe_ingredients.ingredient_id')
-    .join('units', 'units.id', 'recipe_ingredients.unit_id')
-    .select(
-      'ingredients.name',
-      'recipe_ingredients.quantity',
-      'units.name as unit'
-    )
-    .where('recipes.id', id);
-
   const tags = await db('recipe_tags')
   .join('recipes', 'recipes.id', 'recipe_tags.recipe_id')
   .join('tags', 'tags.id', 'recipe_tags.tag_id')
@@ -86,6 +75,17 @@ async function getRecipeById(id) {
       delete ing.id;
       return {...ing, step: i + 1 }
     })
+
+    const ingredients = await db('recipe_ingredients')
+    .join('recipes', 'recipes.id', 'recipe_ingredients.recipe_id')
+    .join('ingredients', 'ingredients.id', 'recipe_ingredients.ingredient_id')
+    .join('units', 'units.id', 'recipe_ingredients.unit_id')
+    .select(
+      'ingredients.name',
+      'recipe_ingredients.quantity',
+      'units.name as unit'
+    )
+    .where('recipes.id', id);
 
   return { ...recipe, tags, categories, images, instructions, ingredients,};
 }
