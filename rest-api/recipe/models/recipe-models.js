@@ -74,7 +74,12 @@ async function getRecipeById(id) {
       'recipe_instructions.instruction_id'
     )
     .select('instructions.text', 'instructions.id')
-    .where('recipe_instructions.recipe_id', id);
+    .where('recipe_instructions.recipe_id', id)
+    .orderBy("id")
+    .map((ing, i) => {
+      delete ing.id;
+      return {...ing, step: i + 1 }
+    })
 
   return { ...recipe, tags, categories, images, instructions, ingredients,};
 }
