@@ -2,7 +2,8 @@ const dbRecipe = require('../models/recipe-models');
 
 module.exports = {
   getRecipes,
-  getRecipeById
+  getRecipeById,
+  addRecipe
 };
 
 async function getRecipes(req, res) {
@@ -29,6 +30,18 @@ async function getRecipeById(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error getting the recipe of id ' + id,
+      error
+    });
+  }
+}
+
+async function addRecipe(req, res) {
+  try {
+    const recipe = await dbRecipe.addRecipeTransaction(req.body);
+    res.status(201).json(recipe);
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was an error creating the recipe',
       error
     });
   }
