@@ -182,15 +182,9 @@ async function addRecipeTransaction(body) {
       }
 
       // RECIPE CATEGORIES
-      // TO BE CHANGED, CATEGORIES SHOULD NOT BE ADDED THIS IS FOR TESTING ONLY
-      // SINCE THERE ARE NO SEEDS
-      const categories = await trx("categories")
-        .insert(body.categories)
-        .returning("*")
-
-      const recipe_categories_object = categories.map(category => {
+      const recipe_categories_object = body.recipe_categories.map(category => {
         return {
-          category_id: category.id,
+          ...category,
           recipe_id: recipe.id
         };
       });
