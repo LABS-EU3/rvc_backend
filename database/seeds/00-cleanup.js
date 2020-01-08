@@ -9,7 +9,6 @@ exports.seed = function(knex) {
     .then(() => knex('recipe_tags').del())
     .then(() => knex('recipe_instructions').del())
     .then(() => knex('profile_info').del())
-    .then(() => knex('recipe_categories').del())
     .then(() => knex('recipes').del())
     .then(() => {
       return cleaner.clean(knex, { // deals with all other tables*
