@@ -42,7 +42,20 @@ async function addRecipe(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error creating the recipe',
-      error
+      error: errorHandler(error)
     });
   }
+}
+
+function errorHandler(error) {
+  switch (error.code) {
+    case '23505':
+      const matchedString = error.detail.match(/\(([^()]+)\)/g);
+      const cleanString = matchedString[1].replace(/([()])/g, "'");
+      return `The value you entered for ${cleanString} already exists`;
+    case '23502':
+      return `No value was entered for '${error.column}'`
+    default:
+      return error;
+  } 
 }
