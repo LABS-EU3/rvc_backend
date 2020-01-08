@@ -24,7 +24,6 @@ exports.up = async function(knex) {
     tbl
       .integer('parent_id')
       .unsigned()
-      .notNullable()
       .references('id')
       .inTable('recipes')
       .onDelete('CASCADE')
