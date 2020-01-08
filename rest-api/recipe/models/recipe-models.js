@@ -103,13 +103,13 @@ async function addRecipeTransaction(body) {
       // body.recipe_categories === array
 
       // RECIPES
-      const [recipe] = await db('recipes')
+      const [recipe] = await trx('recipes')
         .insert(body.recipes)
         .returning('*');
-      const updatedRecipe = await db('recipes').update('parent_id', recipe.id);
+      const updatedRecipe = await trx('recipes').update('parent_id', recipe.id);
 
       // INSTRUCTIONS
-      const instructions = await db('instructions')
+      const instructions = await trx('instructions')
         .insert(body.instructions)
         .returning('*');
 
@@ -121,7 +121,7 @@ async function addRecipeTransaction(body) {
         recipe_id: recipe.id
       }));
 
-      const recipe_instructions = await db('recipe_instructions').insert(
+      const recipe_instructions = await trx('recipe_instructions').insert(
         recipe_instructions_object
       );
 
