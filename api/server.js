@@ -13,12 +13,14 @@ server.use(helmet());
 const recipeRoute = require('../rest-api/recipe/routes/recipe-routes');
 const userRoute = require('../rest-api/user/routes/user-routes');
 const authRoute = require('../rest-api/authentication/routes/auth-routes');
+const unitRoute = require('../rest-api/unit/routes/unit-routes');
 
 
 // Routes Use
 server.use('/api/recipe', recipeRoute);
 server.use('/api/user', userRoute);
 server.use('/api/auth', authRoute);
+server.use('/api/unit', unitRoute);
 
 server.get('/', (req, res) => {
   res.json('just cook it');

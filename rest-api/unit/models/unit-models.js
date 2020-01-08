@@ -2,8 +2,7 @@ const db = require('../../../database/dbConfig')
 
 module.exports = {
     findAllUnits,
-    findUnitBy,
-    addUnit
+    findUnitBy
 }
 
 async function findAllUnits() {
@@ -18,7 +17,8 @@ async function findUnitBy(info) {
     return unit;
 }
 
-async function addUnit(name) {
-    const [unit] = await db('units').returning('*').insert(name);
-    return unit;
-}
+//For an advanced feature
+// async function addUnit(name) {
+//     const [unit] = await db('units').returning('*').insert(name);
+//     return unit;
+// }
