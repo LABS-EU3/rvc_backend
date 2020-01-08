@@ -47,22 +47,25 @@ async function getRecipeById(id) {
     .where('recipes.id', id);
 
   const tags = await db('recipe_tags')
-    .join('recipes', 'recipes.id', 'recipe_tags.recipe_id')
-    .join('tags', 'tags.id', 'recipe_tags.tag_id')
-    .select('tags.name')
-    .where('recipes.id', id)
+  .join('recipes', 'recipes.id', 'recipe_tags.recipe_id')
+  .join('tags', 'tags.id', 'recipe_tags.tag_id')
+  .select('tags.name')
+  .where('recipes.id', id)
+  .map(i => i.name);
 
   const categories = await db('recipe_categories')
   .join('recipes', 'recipes.id', 'recipe_categories.recipe_id')
   .join('categories', 'categories.id', 'recipe_categories.category_id')
   .select('categories.name')
   .where('recipes.id', id)
+  .map(i => i.name);
 
   const images = await db('recipe_images')
   .join('recipes', 'recipes.id', 'recipe_images.recipe_id')
   .join('images', 'images.id', 'recipe_images.image_id')
   .select('images.url')
   .where('recipes.id', id)
+  .map(i => i.url);
 
   const instructions = await db('recipe_instructions')
     .join(
