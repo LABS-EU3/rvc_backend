@@ -125,18 +125,26 @@ async function addRecipeTransaction(body) {
           .insert(body.tags)
           .returning('*');
 
-        const recipe_tags_object = tags.map(tag => ({
+        const new_recipe_tags = tags.map(tag => ({
           tag_id: tag.id,
           recipe_id: recipe.id
         }));
 
-        const recipe_tags = await trx('recipe_tags').insert(recipe_tags_object);
+        if(body.recipe_tags){
+          const recipe_tags_mapped = body.recipe_tags.map(tag => {
+            return { ...tag, recipe_id: recipe.id };
+          });
+          const recipe_tags = await trx('recipe_tags').insert([...recipe_tags_mapped, ...new_recipe_tags]);
+        } else {
+          const recipe_tags = await trx('recipe_tags').insert(new_recipe_tags);
+        }
+
       } else {
         // The reason for this map is because we need to have the id of the newly created recipe
         const recipe_tags_object = body.recipe_tags.map(tag => {
           return { ...tag, recipe_id: recipe.id };
         });
-        const recipes_tags = await trx('tags').insert(recipe_tags_object);
+        const recipes_tags = await trx('recipe_tags').insert(recipe_tags_object);
       }
 
       // IMAGES
@@ -144,41 +152,60 @@ async function addRecipeTransaction(body) {
         .insert(body.images)
         .returning('*');
 
-      const recipe_images_object = images.map(img => ({
+      const new_recipe_images = images.map(img => ({
         image_id: img.id,
         recipe_id: recipe.id
       }));
 
       const recipe_images = await trx('recipe_images').insert(
-        recipe_images_object
+        new_recipe_images
       );
 
       // INGREDIENTS
 
       if (body.ingredients) {
-
         const ingredients = await trx('ingredients')
-          .insert(body.ingredients)
-          .returning('*');
+        .insert(body.ingredients)
+        .returning('*');
 
-        const recipe_ingredients_object = ingredients.map((ingredient, index) => {
-          return { ...body.recipe_ingredients[index], ingredient_id: ingredient.id, recipe_id: recipe.id };
-        });
+        if(body.recipe_ingredients){
+          const existingIngredients = body.recipe_ingredients
+          .filter(i => i.ingredient_id)
+          .map(ingredient => {
+            return {
+              ...ingredient,
+              recipe_id: recipe.id
+            };
+          });
 
-        const recipe_ingredients = await trx('recipe_ingredients').insert(
-          recipe_ingredients_object
-        );
+          const newIngredients = body.recipe_ingredients
+          .filter(i => !i.ingredient_id)
+          .map((ingredient, index) => {
+            return {
+              ...ingredient,
+              ingredient_id: ingredients[index].id,
+              recipe_id: recipe.id
+            };
+          });
+
+          const recipe_ingredients = await trx('recipe_ingredients').insert([...existingIngredients, ...newIngredients]);
+        } else {
+          const new_recipe_ingredients = ingredients.map((ingredient, index) => {
+            return { ...body.recipe_ingredients[index], ingredient_id: ingredient.id, recipe_id: recipe.id };
+          });
+
+          const recipe_ingredients = await trx('recipe_ingredients').insert(new_recipe_ingredients);
+        }
+
       } else {
-        const recipe_ingredients_object = body.recipe_ingredients.map(ingredient => {
+        const new_recipe_ingredients = body.recipe_ingredients.map(ingredient => {
           return {
             ...ingredient,
             recipe_id: recipe.id
           };
         });
 
-        const recipe_ingredients = await trx('recipe_ingredients').insert(
-          recipe_ingredients_object
-        );
+        const recipe_ingredients = await trx('recipe_ingredients').insert(new_recipe_ingredients);
       }
 
       // RECIPE CATEGORIES
@@ -193,6 +220,7 @@ async function addRecipeTransaction(body) {
 
       return recipe.id
     } catch (error) {
+      console.log(error)
       throw error;
     }
   })
