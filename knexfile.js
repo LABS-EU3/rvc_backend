@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 module.exports = {
-
   development: {
     client: 'pg',
     connection: {
@@ -11,11 +10,11 @@ module.exports = {
       password: process.env.DATABASE_DEV_PASSWORD
     },
     migrations: {
-      directory: './database/migrations',
+      directory: './database/migrations'
     },
     seeds: {
-      directory: './database/seeds',
-    },
+      directory: './database/seeds'
+    }
   },
 
   testing: {
@@ -27,22 +26,21 @@ module.exports = {
       password: process.env.DATABASE_DEV_PASSWORD
     },
     migrations: {
-      directory: './database/migrations',
+      directory: './database/migrations'
     },
     seeds: {
-      directory: './database/seeds',
-    },
+      directory: './database/seeds'
+    }
   },
 
   production: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './database/migrations',
+      directory: './database/migrations'
     },
     seeds: {
-      directory: './database/seeds',
-    },
+      directory: './database/seeds'
+    }
   }
-
 };

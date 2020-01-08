@@ -1,4 +1,3 @@
-
 exports.seed = function(knex) {
   return knex('units').insert([
     {name: 'no unit; REPLACE W/ EMPTY STRING'}, //1
