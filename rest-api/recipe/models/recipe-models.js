@@ -101,7 +101,8 @@ async function addRecipeTransaction(body) {
 
       // RECIPES
       const [recipe] = await db('recipes').insert(body.recipes).returning("*");
-      
+      const updatedRecipe = await db('recipes').update('parent_id', recipe.id)
+
       // INSTRUCTIONS
       const instructions = await db('instructions')
         .insert(body.instructions)
