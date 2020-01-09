@@ -5,7 +5,7 @@ const {
   getRecipeById,
   addRecipe
 } = require('../controllers/recipe-controllers');
-const { validateId } = require('../middlewares/recipe-middlwares');
+const { validateId } = require('../middlewares/validateID');
 
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
