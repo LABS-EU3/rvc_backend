@@ -2,7 +2,8 @@ const dbRecipe = require('../models/recipe-models');
 
 module.exports = {
   getRecipes,
-  getRecipeById
+  getRecipeById,
+  addRecipe
 };
 
 async function getRecipes(req, res) {
@@ -32,4 +33,29 @@ async function getRecipeById(req, res) {
       error
     });
   }
+}
+
+async function addRecipe(req, res) {
+  try {
+    const recipe = await dbRecipe.addRecipeTransaction(req.body);
+    res.status(201).json(recipe);
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was an error creating the recipe',
+      error: errorHandler(error)
+    });
+  }
+}
+
+function errorHandler(error) {
+  switch (error.code) {
+    case '23505':
+      const matchedString = error.detail.match(/\(([^()]+)\)/g);
+      const cleanString = matchedString[1].replace(/([()])/g, "'");
+      return `The value you entered for ${cleanString} already exists`;
+    case '23502':
+      return `No value was entered for '${error.column}'`
+    default:
+      return error;
+  } 
 }
