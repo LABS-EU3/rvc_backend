@@ -17,6 +17,7 @@ const unitRoute = require('../rest-api/unit/routes/unit-routes');
 const categoryRoute = require('../rest-api/category/routes/category-routes');
 const tagRoute = require('../rest-api/tag/routes/tag-routes');
 const ingredientRoute = require('../rest-api/ingredient/routes/ingredient-routes');
+const profileInfoRoute = require('../rest-api/profile-info/routes/profile-info-routes');
 
 
 // Routes Use
@@ -27,6 +28,7 @@ server.use('/api/unit', unitRoute);
 server.use('/api/category', categoryRoute);
 server.use('/api/tag', tagRoute);
 server.use('/api/ingredient', ingredientRoute);
+server.use('/api/profile', profileInfoRoute);
 
 server.get('/', (req, res) => {
   res.json('just cook it');
