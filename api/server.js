@@ -18,7 +18,6 @@ const categoryRoute = require('../rest-api/category/routes/category-routes');
 const tagRoute = require('../rest-api/tag/routes/tag-routes');
 const ingredientRoute = require('../rest-api/ingredient/routes/ingredient-routes');
 
-
 // Routes Use
 server.use('/api/recipe', recipeRoute);
 server.use('/api/user', userRoute);
@@ -33,7 +32,7 @@ server.get('/', (req, res) => {
 });
 
 server.get('/api/docs', (req, res) => {
-  res.redirect("https://documenter.getpostman.com/view/8105818/SWEE1F3V");
+  res.redirect('https://documenter.getpostman.com/view/8105818/SWEE1F3V');
 });
 
 module.exports = server;

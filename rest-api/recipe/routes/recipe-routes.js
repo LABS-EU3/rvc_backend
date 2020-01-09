@@ -8,7 +8,9 @@ const {
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
 const { emptyFields } = require('../middlewares/emptyFields');
-const { validateToken } = require("../../authentication/middlewares/validateToken");
+const {
+  validateToken
+} = require('../../authentication/middlewares/validateToken');
 
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);

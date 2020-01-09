@@ -1,5 +1,5 @@
 const dbRecipe = require('../models/recipe-models');
-const errorHandler = require("../middlewares/errorHandler");
+const errorHandler = require('../middlewares/errorHandler');
 
 module.exports = {
   getRecipes,
