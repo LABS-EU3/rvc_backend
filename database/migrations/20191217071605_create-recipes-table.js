@@ -23,7 +23,7 @@ exports.up = async function(knex) {
       .onUpdate('CASCADE');
     tbl
       .integer('parent_id')
-      .unsigned()
+      .unsigned();
     tbl.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   });
 };
