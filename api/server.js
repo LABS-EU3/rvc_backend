@@ -32,4 +32,8 @@ server.get('/', (req, res) => {
   res.json('just cook it');
 });
 
+server.get('/api/docs', (req, res) => {
+  res.redirect("https://documenter.getpostman.com/view/8105818/SWEE1F3V");
+});
+
 module.exports = server;
