@@ -24,10 +24,6 @@ exports.up = async function(knex) {
     tbl
       .integer('parent_id')
       .unsigned()
-      .references('id')
-      .inTable('recipes')
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE');
     tbl.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   });
 };
