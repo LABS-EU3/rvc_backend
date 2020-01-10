@@ -182,7 +182,6 @@ async function addRecipeTransaction(body) {
           .insert(body.ingredients)
           .returning('*');
 
-        if (body.recipe_ingredients) {
           const existingIngredients = body.recipe_ingredients
             .filter(i => i.ingredient_id)
             .map(ingredient => {
@@ -206,22 +205,7 @@ async function addRecipeTransaction(body) {
             ...existingIngredients,
             ...newIngredients
           ]);
-        } else {
-          const new_recipe_ingredients = ingredients.map(
-            (ingredient, index) => {
-              return {
-                // check this
-                ...body.recipe_ingredients[index],
-                ingredient_id: ingredient.id,
-                recipe_id: recipe.id
-              };
-            }
-          );
-
-          const recipe_ingredients = await trx('recipe_ingredients').insert(
-            new_recipe_ingredients
-          );
-        }
+        
       } else {
         const new_recipe_ingredients = body.recipe_ingredients.map(
           ingredient => {
