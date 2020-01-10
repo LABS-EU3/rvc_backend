@@ -116,10 +116,12 @@ async function addRecipeTransaction(body) {
       // The reason for the mapping is because you need to have the id's of the added instructions
       // in order to link insert them into the intermediary table
 
-      const recipe_instructions_object = instructions.map(instruction => ({
-        instruction_id: instruction.id,
-        recipe_id: recipe.id
-      }));
+      const recipe_instructions_object = instructions.map(instruction => {
+        return {
+          instruction_id: instruction.id,
+          recipe_id: recipe.id
+        };
+      });
 
       const recipe_instructions = await trx('recipe_instructions').insert(
         recipe_instructions_object
@@ -180,7 +182,6 @@ async function addRecipeTransaction(body) {
           .insert(body.ingredients)
           .returning('*');
 
-        if (body.recipe_ingredients) {
           const existingIngredients = body.recipe_ingredients
             .filter(i => i.ingredient_id)
             .map(ingredient => {
@@ -204,21 +205,7 @@ async function addRecipeTransaction(body) {
             ...existingIngredients,
             ...newIngredients
           ]);
-        } else {
-          const new_recipe_ingredients = ingredients.map(
-            (ingredient, index) => {
-              return {
-                ...body.recipe_ingredients[index],
-                ingredient_id: ingredient.id,
-                recipe_id: recipe.id
-              };
-            }
-          );
-
-          const recipe_ingredients = await trx('recipe_ingredients').insert(
-            new_recipe_ingredients
-          );
-        }
+        
       } else {
         const new_recipe_ingredients = body.recipe_ingredients.map(
           ingredient => {

@@ -19,7 +19,6 @@ const tagRoute = require('../rest-api/tag/routes/tag-routes');
 const ingredientRoute = require('../rest-api/ingredient/routes/ingredient-routes');
 const profileInfoRoute = require('../rest-api/profile-info/routes/profile-info-routes');
 
-
 // Routes Use
 server.use('/api/recipe', recipeRoute);
 server.use('/api/user', userRoute);
@@ -32,6 +31,10 @@ server.use('/api/profile', profileInfoRoute);
 
 server.get('/', (req, res) => {
   res.json('just cook it');
+});
+
+server.get('/api/docs', (req, res) => {
+  res.redirect('https://documenter.getpostman.com/view/8105818/SWEE1F3V');
 });
 
 module.exports = server;
