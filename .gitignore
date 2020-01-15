@@ -105,3 +105,6 @@ dist
 
 # Notesy
 .notesy
+
+#knex
+knex.sh
