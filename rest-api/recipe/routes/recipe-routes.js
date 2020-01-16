@@ -14,6 +14,6 @@ const {
 
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
-router.post('/', validateToken, requiredFields, emptyFields, addRecipe);
+router.post('/', validateToken,  addRecipe);
 
 module.exports = router;
