@@ -28,7 +28,7 @@ function login(credentials) {
           const token = generateToken(user);
           return { ...user, token };
         } else {
-          return { error: 'Your email or password is incorrect' };
+          throw { status: 401, error: 'Your email or password is incorrect' };
         }
       })
   );

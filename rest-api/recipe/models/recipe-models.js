@@ -106,13 +106,17 @@ async function addRecipeTransaction(body) {
 
       // RECIPES
       const [recipe] = await trx('recipes')
-        .insert(body.recipes)
+        .insert(body.recipe)
         .returning('*');
       const updatedRecipe = await trx('recipes').update('parent_id', recipe.id);
 
       // INSTRUCTIONS
+      const newInstructions = body.instructions.map(instruction => {
+        return { text: instruction };
+      });
+
       const instructions = await trx('instructions')
-        .insert(body.instructions)
+        .insert(newInstructions)
         .returning('*');
 
       // The reason for the mapping is because you need to have the id's of the added instructions
@@ -133,8 +137,12 @@ async function addRecipeTransaction(body) {
       // The reason why it checks for a tag, is because the user has the ability to add new tags
       // However, if the tags already exists we then expect a recipe_tags object with the provided id's
       if (body.tags) {
+        const newTags = body.tags.map(tag => {
+          return { name: tag };
+        });
+
         const tags = await trx('tags')
-          .insert(body.tags)
+          .insert(newTags)
           .returning('*');
 
         const new_recipe_tags = tags.map(tag => ({
@@ -144,7 +152,7 @@ async function addRecipeTransaction(body) {
 
         if (body.recipe_tags) {
           const recipe_tags_mapped = body.recipe_tags.map(tag => {
-            return { ...tag, recipe_id: recipe.id };
+            return { tag_id: tag, recipe_id: recipe.id };
           });
           const recipe_tags = await trx('recipe_tags').insert([
             ...recipe_tags_mapped,
@@ -156,7 +164,7 @@ async function addRecipeTransaction(body) {
       } else {
         // The reason for this map is because we need to have the id of the newly created recipe
         const recipe_tags_object = body.recipe_tags.map(tag => {
-          return { ...tag, recipe_id: recipe.id };
+          return { tag_id: tag, recipe_id: recipe.id };
         });
         const recipes_tags = await trx('recipe_tags').insert(
           recipe_tags_object
@@ -164,8 +172,11 @@ async function addRecipeTransaction(body) {
       }
 
       // IMAGES
+      const newImages = body.images.map(img => {
+        return { url: img };
+      });
       const images = await trx('images')
-        .insert(body.images)
+        .insert(newImages)
         .returning('*');
 
       const new_recipe_images = images.map(img => ({
@@ -180,34 +191,36 @@ async function addRecipeTransaction(body) {
       // INGREDIENTS
 
       if (body.ingredients) {
+        const newIngredientsMap = body.ingredients.map(ingredient => {
+          return { name: ingredient };
+        });
         const ingredients = await trx('ingredients')
-          .insert(body.ingredients)
+          .insert(newIngredientsMap)
           .returning('*');
 
-          const existingIngredients = body.recipe_ingredients
-            .filter(i => i.ingredient_id)
-            .map(ingredient => {
-              return {
-                ...ingredient,
-                recipe_id: recipe.id
-              };
-            });
+        const existingIngredients = body.recipe_ingredients
+          .filter(i => i.ingredient_id)
+          .map(ingredient => {
+            return {
+              ...ingredient,
+              recipe_id: recipe.id
+            };
+          });
 
-          const newIngredients = body.recipe_ingredients
-            .filter(i => !i.ingredient_id)
-            .map((ingredient, index) => {
-              return {
-                ...ingredient,
-                ingredient_id: ingredients[index].id,
-                recipe_id: recipe.id
-              };
-            });
+        const newIngredients = body.recipe_ingredients
+          .filter(i => !i.ingredient_id)
+          .map((ingredient, index) => {
+            return {
+              ...ingredient,
+              ingredient_id: ingredients[index].id,
+              recipe_id: recipe.id
+            };
+          });
 
-          const recipe_ingredients = await trx('recipe_ingredients').insert([
-            ...existingIngredients,
-            ...newIngredients
-          ]);
-        
+        const recipe_ingredients = await trx('recipe_ingredients').insert([
+          ...existingIngredients,
+          ...newIngredients
+        ]);
       } else {
         const new_recipe_ingredients = body.recipe_ingredients.map(
           ingredient => {
@@ -224,9 +237,10 @@ async function addRecipeTransaction(body) {
       }
 
       // RECIPE CATEGORIES
+
       const recipe_categories_object = body.recipe_categories.map(category => {
         return {
-          ...category,
+          category_id: category,
           recipe_id: recipe.id
         };
       });
