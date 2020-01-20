@@ -11,6 +11,7 @@ async function getRecipes() {
     .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
     .leftJoin('images', 'images.id', 'recipe_images.image_id')
     .leftJoin('users', 'users.id', 'recipes.user_id')
+    .leftJoin('likes', 'likes.recipe_id', 'recipes.id')
     .select(
       'users.id',
       'recipes.id',
@@ -22,13 +23,16 @@ async function getRecipes() {
       'recipes.difficulty',
       'recipes.budget',
       'images.url as imageUrl'
-    );
+    )
+    .count('likes.user_id as likes')
+    .groupBy('recipes.id', 'users.id', 'images.url');
   return recipes;
 }
 
 async function getRecipeById(id) {
   const recipe = await db('recipes')
     .leftJoin('users', 'users.id', 'recipes.user_id')
+    .leftJoin('likes', 'likes.recipe_id', 'recipes.id')
     .select(
       'users.id',
       'recipes.id',
@@ -41,6 +45,8 @@ async function getRecipeById(id) {
       'recipes.budget'
     )
     .where('recipes.id', id)
+    .count('likes.user_id as likes')
+    .groupBy('recipes.id', 'users.id')
     .first();
 
   const tags = await db('recipe_tags')
