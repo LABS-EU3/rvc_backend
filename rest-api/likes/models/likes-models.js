@@ -11,7 +11,7 @@ async function getLikedRecipesByUserId(id) {
   const recipes = await db('likes')
     .select(
       'recipes.id',
-      'users.id as user_id',
+      'recipes.user_id',
       'recipes.parent_id',
       'users.username as author',
       'recipes.title as recipe_title',
@@ -20,10 +20,8 @@ async function getLikedRecipesByUserId(id) {
       'recipes.difficulty',
       'recipes.budget'
     )
-    .leftJoin('users', 'users.id', 'likes.user_id')
     .leftJoin('recipes', 'recipes.id', 'likes.recipe_id')
-    .count('likes.user_id as likes')
-    .groupBy('recipes.id', 'users.id')
+    .leftJoin('users', 'users.id', 'recipes.user_id')
     .where('likes.user_id', id);
 
   return recipes.length
