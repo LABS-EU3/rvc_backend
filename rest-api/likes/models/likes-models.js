@@ -18,10 +18,13 @@ async function getLikedRecipesByUserId(id) {
       'recipes.description',
       'recipes.time_required',
       'recipes.difficulty',
-      'recipes.budget'
+      'recipes.budget',
+      'images.url as imageUrl'
     )
     .leftJoin('recipes', 'recipes.id', 'likes.recipe_id')
     .leftJoin('users', 'users.id', 'recipes.user_id')
+    .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
+    .leftJoin('images', 'images.id', 'recipe_images.image_id')
     .where('likes.user_id', id);
 
   return recipes.length
