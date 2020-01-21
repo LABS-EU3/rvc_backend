@@ -6,9 +6,11 @@ const {
     deleteLike
 } = require('../controllers/likes-controllers');
 
+const { checkRequired } = require('../middlewares/checkRequired');
+
 router.get('/:id', getLikedRecipesByUserId);
-router.post('/', postLikeRecipe);
-router.delete('/', deleteLike);
+router.post('/', checkRequired, postLikeRecipe);
+router.delete('/', checkRequired, deleteLike);
 
 
 
