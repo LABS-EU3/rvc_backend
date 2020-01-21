@@ -1,8 +1,5 @@
 function validateDataTypeBody(req, res, next) {
-  if (
-    !isNaN(Number(req.body.user_id)) &&
-    !isNaN(Number(req.body.recipe_id))
-  ) {
+  if (!isNaN(Number(req.body.user_id)) && !isNaN(Number(req.body.recipe_id))) {
     next();
   } else {
     res

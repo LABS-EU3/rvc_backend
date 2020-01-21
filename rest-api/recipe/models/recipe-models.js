@@ -114,7 +114,9 @@ async function addRecipeTransaction(body) {
       const [recipe] = await trx('recipes')
         .insert(body.recipe)
         .returning('*');
-      const updatedRecipe = await trx('recipes').where("recipes.id", recipe.id).update('parent_id', recipe.id);
+      const updatedRecipe = await trx('recipes')
+        .where('recipes.id', recipe.id)
+        .update('parent_id', recipe.id);
 
       // INSTRUCTIONS
       const newInstructions = body.instructions.map(instruction => {
