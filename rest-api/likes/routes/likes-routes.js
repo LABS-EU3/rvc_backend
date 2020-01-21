@@ -7,10 +7,13 @@ const {
 } = require('../controllers/likes-controllers');
 
 const { checkRequired } = require('../middlewares/checkRequired');
+const { validateDataTypeParams } = require('../middlewares/validateDataTypeParams');
+const { validateDataTypeBody } = require('../middlewares/validateDataTypeBody');
 
-router.get('/:id', getLikedRecipesByUserId);
-router.post('/', checkRequired, postLikeRecipe);
-router.delete('/', checkRequired, deleteLike);
+
+router.get('/:id', validateDataTypeParams, getLikedRecipesByUserId);
+router.post('/', validateDataTypeBody, checkRequired, postLikeRecipe);
+router.delete('/', validateDataTypeBody, checkRequired, deleteLike);
 
 
 
