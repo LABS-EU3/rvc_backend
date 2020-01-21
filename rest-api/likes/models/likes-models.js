@@ -8,7 +8,7 @@ module.exports = {
 };
 
 async function getLikedRecipesByUserId(id) {
-  return await db('likes')
+  const recipes = await db('likes')
     .select(
       'recipes.id',
       'users.id as user_id',
@@ -25,6 +25,10 @@ async function getLikedRecipesByUserId(id) {
     .count('likes.user_id as likes')
     .groupBy('recipes.id', 'users.id')
     .where('likes.user_id', id);
+
+  return recipes.length
+    ? recipes
+    : { message: 'The id provided is invalid or has expired' };
 }
 
 async function insertLike(like) {
