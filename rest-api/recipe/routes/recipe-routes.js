@@ -3,7 +3,10 @@ const router = require('express').Router();
 const {
   getRecipes,
   getRecipeById,
-  addRecipe
+  addRecipe,
+  editRecipe,
+  editTag,
+  editCategory
 } = require('../controllers/recipe-controllers');
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
@@ -16,4 +19,8 @@ router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
 router.post('/', validateToken, requiredFields, addRecipe);
 
+//sam
+router.put('/recipe/:id', validateId, requiredFields, editRecipe)
+router.put('/tags/:id', validateId, requiredFields, editTag)
+router.put('/categories/:id', validateId, requiredFields, editCategory)
 module.exports = router;

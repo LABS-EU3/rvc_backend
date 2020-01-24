@@ -4,7 +4,9 @@ const errorHandler = require('../middlewares/errorHandler');
 module.exports = {
   getRecipes,
   getRecipeById,
-  addRecipe
+  addRecipe,
+  editRecipe,
+  editTag
 };
 
 async function getRecipes(req, res) {
@@ -45,5 +47,55 @@ async function addRecipe(req, res) {
       message: 'There was an error creating the recipe',
       error: errorHandler(error)
     });
+  }
+}
+//sam 
+async function editRecipe(req, res) { 
+  const { id } = req.params;
+  try { 
+    const editRecipe = await dbRecipe.editRecipe(id, req.body);
+   editRecipe ?
+      res.status(200).json({ message: 'recipe successfully updated'})
+      :
+      res.status(401).json({message: 'recipe id does not match '})
+    }
+    catch(error) { 
+    res.status(500).json({ 
+      message: `update unsuccessful of for `+ id
+    })
+  }
+}
+
+async function editTag(req, res) { 
+  const { id } = req.params; 
+  try { 
+    const editTag = await dbRecipe.editTag( id, req.body);
+    editTag ? 
+    res.status(200).json({ message: 'tags succesffully updated'})
+    : 
+    res.status(401).json({ message: 'tag id does nont match '})
+  }
+  catch(error) { 
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id
+    })
+  }
+}
+
+async function editCategory(req, res){ 
+  const { id } = req.params;
+  try{ 
+    const editCategory= await dbRecipe.editCategory( id,req.body);
+    editCategory ? 
+    res.status(200).json({ message: 'tags succesffully updated'})
+    : 
+    res.status(401).json({ message: 'tag id does nont match '})
+  }
+  catch(error) { 
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id
+    })
+  }
+
   }
 }

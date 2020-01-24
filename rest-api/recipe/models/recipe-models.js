@@ -3,8 +3,51 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   getRecipes,
   getRecipeById,
-  addRecipeTransaction
+  addRecipeTransaction, 
+  editRecipe,
+  editTag,
+  editCategory
 };
+
+//sam
+async function editRecipe(id , recipeUpdate) { 
+  const editRecipe = await db('recipes')
+  .join('users','users.id', 'recipes.user_id')
+  .select(
+    'users.id',
+    'recipes_id',
+    'recipes.parent_id',
+    'recipes.title as title',
+    'recipes.description',
+    'recipes.time_required',
+    'recipes.difficulty',
+    'recipes.budget'
+  )
+  .where('recipes.id', id )
+  .update(recipeUpdate)
+  return editRecipe
+}
+
+async function editTag(id, tagUpdate) { 
+  const editTag = await db('recipe_tags')
+  .join('recipes', 'recipes_id')
+  .join('tags', 'tags.id','recipe_tags.tags_id' )
+  .select('tags.name')
+  .where('recipes_id', id)
+  .update(tagUpdate)
+  return editTag
+}
+
+async function editCategory(id, categoryUpdate) { 
+  const editCategory = await db('recipe_categories')
+  .join('recipes', 'recipes_id')
+  .join('categories','categories.id','recipe_categories.recipe_id')
+  .select('categories.name')
+  .where('recipes_id', id)
+  .update(categoryUpdate)
+  return editCategory
+}
+
 
 async function getRecipes() {
   const recipes = await db('recipes')
