@@ -3,7 +3,8 @@ const router = require('express').Router();
 const {
   getRecipes,
   getRecipeById,
-  addRecipe
+  addRecipe,
+  addImageToRecipe
 } = require('../controllers/recipe-controllers');
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
@@ -15,5 +16,6 @@ const {
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
 router.post('/', validateToken, requiredFields, addRecipe);
+router.post('/:id/image', validateId, addImageToRecipe);
 
 module.exports = router;
