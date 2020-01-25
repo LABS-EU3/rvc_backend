@@ -5,6 +5,7 @@ module.exports = {
   getRecipeById,
   addRecipeTransaction,
   addImageToRecipe,
+  updateIngredientByRecipeId,
 };
 
 async function getRecipes() {
@@ -302,4 +303,37 @@ async function addImageToRecipe(body, recipe_id) {
       throw(err);
     }
   });
-}
+};
+
+async function updateIngredientByRecipeId(body, recipe_id) {
+  // Let's assume _body_ has the following shape:
+  /* {
+    name: STRING,
+    quantity: INT,
+    unit_id: INT,
+    index: INT
+  } */
+  // This makes things easy for the frontend.
+  // But it means we have to check whether _name_ already exists in the ingredients table!
+  // Like so...
+
+  const { name, quantitity, unit_id, index } = body;
+
+  return await db.transaction(async trx => {
+    try {
+      const [ingredient_id] = await trx('ingredients as i')
+        .where('i.name', name)
+        .select('i.id');
+      
+      if (ingredient_id) {
+        console.log('Ingredient exists.');
+      } else {
+        console.log('No such ingredient exists.')
+      }
+      
+    } catch (err) {
+      console.log(err);
+      throw(err);
+    }
+  });
+};

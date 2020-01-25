@@ -6,6 +6,7 @@ module.exports = {
   getRecipeById,
   addRecipe,
   addImageToRecipe,
+  updateIngredientByRecipeId
 };
 
 async function getRecipes(req, res) {
@@ -56,7 +57,19 @@ async function addImageToRecipe(req, res) {
   } catch (err) {
     res.status(500).json({
       message: 'There was an error adding the image to the recipe.',
-      error: (errorHandler(err))
+      error: errorHandler(err)
+    });
+  };
+};
+
+async function updateIngredientByRecipeId(req, res) {
+  try{
+    const ingredients = await dbRecipe.updateIngredientByRecipeId(req.body, req.params.id);
+    res.status(200).json(ingredients);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an error updating the ingredient.',
+      error: errorHandler(err)
     });
   };
 };
