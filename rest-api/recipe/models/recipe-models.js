@@ -315,7 +315,7 @@ async function updateIngredientByRecipeId(body, recipe_id) {
   // But it means we have to check whether _name_ already exists in the ingredients table!
   // Like so...
 
-  const { name, quantitity, unit_id, index } = body;
+  const { name, quantity, unit_id, index } = body;
 
   return await db.transaction(async trx => {
     try {
@@ -333,9 +333,13 @@ async function updateIngredientByRecipeId(body, recipe_id) {
       const { id } = recipeIngredientsIds[index]; // (The id of the recipe_ingredients row to change!)
 
       await trx('recipe_ingredients')
-        .update('quantity', quantitity)
+        .update('quantity', quantity)
+        .where('id', id);
+
+      await trx('recipe_ingredients')
         .update('unit_id', unit_id)
         .where('id', id);
+      // (Note: the above need to be separate because .update() doesn't properly chain!)
 
       if (ingredient_id) {
         // But if _name_ already exists, we simply update _ingredient_id_ in 'recipe_ingredients':
