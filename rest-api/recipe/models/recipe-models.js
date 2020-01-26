@@ -282,9 +282,7 @@ async function addImageToRecipe(body, recipe_id) {
       const images = await trx('recipe_images as rI')
         .join('images as i', 'rI.image_id', 'i.id')
         .where('rI.recipe_id', recipe_id)
-        .select(
-          'i.url',
-        );
+        .select('i.url');
 
       const [basicRecipeInfo] = await trx('recipes as r')
         .join('recipe_images as rI', 'r.id', 'rI.recipe_id')
@@ -321,16 +319,51 @@ async function updateIngredientByRecipeId(body, recipe_id) {
 
   return await db.transaction(async trx => {
     try {
-      const [ingredient_id] = await trx('ingredients as i')
+      // Need to check whether _name_ already exists in the 'ingredients' table!
+      const [ingredient_idObject] = await trx('ingredients as i')
         .where('i.name', name)
         .select('i.id');
+
+      const ingredient_id = ingredient_idObject ? ingredient_idObject.id : undefined;
       
+      // In both cases, _quantity_ and _unit_id_ need to be updated in the 'recipe_ingredients' table.
+      const recipeIngredientsIds = await trx('recipe_ingredients as rI')
+        .where('rI.recipe_id', recipe_id)
+        .select('rI.id');
+      const { id } = recipeIngredientsIds[index]; // (The id of the recipe_ingredients row to change!)
+
+      await trx('recipe_ingredients')
+        .update('quantity', quantitity)
+        .update('unit_id', unit_id)
+        .where('id', id);
+
       if (ingredient_id) {
-        console.log('Ingredient exists.');
+        // But if _name_ already exists, we simply update _ingredient_id_ in 'recipe_ingredients':
+        await trx('recipe_ingredients')
+          .update('ingredient_id', ingredient_id)
+          .where('id', id);
+
       } else {
-        console.log('No such ingredient exists.')
+        // Otherwise, need to first add a new ingredient with _name_ to the 'ingredients' table, ...
+        const [newIngredientId] = await trx('ingredients')
+          .insert({ name })
+          .returning('id');
+
+        // ... then update _ingredient_id_ in 'recipe_ingredients':
+        await trx('recipe_ingredients')
+          .update('ingredient_id', newIngredientId)
+          .where('id', id);
       }
-      
+
+      return await trx('recipe_ingredients as rI')
+        .join('units as u', 'rI.unit_id', 'u.id')
+        .join('ingredients as i', 'rI.ingredient_id', 'i.id')
+        .where('rI.recipe_id', recipe_id)
+        .select(
+          'i.name',
+          'rI.quantity',
+          'u.name as unit'
+        );
     } catch (err) {
       console.log(err);
       throw(err);
