@@ -7,6 +7,7 @@ module.exports = {
   addImageToRecipe,
   updateIngredientByRecipeId,
   addIngredientToRecipe,
+  removeIngredientFromRecipe
 };
 
 async function getRecipes() {
@@ -420,6 +421,56 @@ async function addIngredientToRecipe(body, recipe_id) {
           'rI.quantity',
           'u.name as unit'
         );
+    } catch (err) {
+      console.log(err);
+      throw(err);
+    }
+  });
+};
+
+async function removeIngredientFromRecipe(body, recipe_id) {
+  const { index } = body;
+
+  return await db.transaction(async trx => {
+    try {
+      const recipeIngredientsIds = await trx('recipe_ingredients as rI')
+        .where('rI.recipe_id', recipe_id)
+        .select('rI.id');
+      const { id } = recipeIngredientsIds[index]; // (The id of the recipe_ingredients row to be deleted!)
+
+      const ingredientIdObject = await trx('recipe_ingredients as rI')
+        .join('ingredients as i', 'rI.ingredient_id', 'i.id')
+        .where('rI.id', id)
+        .select('i.id')
+        .first();
+      const ingredient_id = ingredientIdObject.id;
+      
+      // Need to grab the ingredient before deleting it!
+      const [ingredientToBeDeleted] = await trx('recipe_ingredients as rI')
+        .join('ingredients as i', 'rI.ingredient_id', 'i.id')
+        .join('units as u', 'rI.unit_id', 'u.id')
+        .where('rI.id', id)
+        .select(
+          'i.name',
+          'rI.quantity',
+          'u.name as unit'
+        );
+
+      await trx('recipe_ingredients as rI')
+        .where('rI.id', id)
+        .del();
+
+      // If the ingredient isn't featured in _any_ recipe, might as well delete it from the 'ingredients' table!
+      const ingredientAppearances = await trx('recipe_ingredients as rI')
+        .where('rI.ingredient_id', ingredient_id);
+      
+      if (ingredientAppearances.length === 0) {
+        await trx('ingredients as i')
+          .where('i.id', ingredient_id)
+          .del();
+      }
+
+      return ingredientToBeDeleted;
     } catch (err) {
       console.log(err);
       throw(err);

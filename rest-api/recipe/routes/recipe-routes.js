@@ -6,7 +6,8 @@ const {
   addRecipe,
   addImageToRecipe,
   updateIngredientByRecipeId,
-  addIngredientToRecipe
+  addIngredientToRecipe,
+  removeIngredientFromRecipe
 } = require('../controllers/recipe-controllers');
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
@@ -21,5 +22,6 @@ router.post('/', validateToken, requiredFields, addRecipe);
 router.post('/:id/image', /* validateToken, */ validateId, addImageToRecipe);
 router.put('/:id/ingredient', /* validateToken, */ validateId, updateIngredientByRecipeId);
 router.post('/:id/ingredient', /* validateToken, */ validateId, addIngredientToRecipe);
+router.delete('/:id/ingredient', /* validateToken, */ validateId, removeIngredientFromRecipe);
 
 module.exports = router;
