@@ -23,5 +23,6 @@ router.post('/:id/image', /* validateToken, */ validateId, addImageToRecipe);
 router.put('/:id/ingredient', /* validateToken, */ validateId, updateIngredientByRecipeId);
 router.post('/:id/ingredient', /* validateToken, */ validateId, addIngredientToRecipe);
 router.delete('/:id/ingredient', /* validateToken, */ validateId, removeIngredientFromRecipe);
+// A note about validation: We shall want to make sure that users can only modify their _own_ recipes' images, ingredients, etc.!
 
 module.exports = router;
