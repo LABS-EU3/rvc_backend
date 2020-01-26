@@ -6,6 +6,7 @@ module.exports = {
   addRecipeTransaction,
   addImageToRecipe,
   updateIngredientByRecipeId,
+  addIngredientToRecipe,
 };
 
 async function getRecipes() {
@@ -362,6 +363,57 @@ async function updateIngredientByRecipeId(body, recipe_id) {
       return await trx('recipe_ingredients as rI')
         .join('units as u', 'rI.unit_id', 'u.id')
         .join('ingredients as i', 'rI.ingredient_id', 'i.id')
+        .where('rI.recipe_id', recipe_id)
+        .select(
+          'i.name',
+          'rI.quantity',
+          'u.name as unit'
+        );
+    } catch (err) {
+      console.log(err);
+      throw(err);
+    }
+  });
+};
+
+async function addIngredientToRecipe(body, recipe_id) {
+  const { name, quantity, unit_id } = body;
+
+  return await db.transaction(async trx => {
+    try {
+      // Similar thinking as above: need to check whether the ingredient already exists
+      // in the 'ingredients' table before posting!
+      const [ingredient_idObject] = await trx('ingredients as i')
+        .where('i.name', name)
+        .select('i.id');
+
+      const ingredient_id = ingredient_idObject ? ingredient_idObject.id : undefined;
+
+      if (ingredient_id) {
+        await trx('recipe_ingredients')
+          .insert({ 
+            recipe_id,
+            ingredient_id,
+            quantity,
+            unit_id
+          });
+      } else {
+        const [newIngredientId] = await trx('ingredients')
+          .insert({ name })
+          .returning('id');
+
+        await trx('recipe_ingredients')
+          .insert({
+            recipe_id,
+            'ingredient_id': newIngredientId,
+            quantity,
+            unit_id
+          });
+      }
+
+      return await trx('recipe_ingredients as rI')
+        .join('ingredients as i', 'rI.ingredient_id', 'i.id')
+        .join('units as u', 'rI.unit_id', 'u.id')
         .where('rI.recipe_id', recipe_id)
         .select(
           'i.name',
