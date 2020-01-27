@@ -4,29 +4,69 @@ module.exports = {
   getRecipes,
   getRecipeById,
   addRecipeTransaction, 
-  editRecipe,
+  editRecipeInfo,
   editTag,
   editCategory
 };
 
 //sam
-async function editRecipe(id , recipeUpdate) { 
-  const editRecipe = await db('recipes')
-  .join('users','users.id', 'recipes.user_id')
-  .select(
-    'users.id',
-    'recipes_id',
-    'recipes.parent_id',
-    'recipes.title as title',
-    'recipes.description',
-    'recipes.time_required',
-    'recipes.difficulty',
-    'recipes.budget'
-  )
-  .where('recipes.id', id )
-  .update(recipeUpdate)
-  return editRecipe
-}
+// async function editRecipeInfo (id , recipeUpdate) { 
+//   const editRecipeInfo = await db('recipes')
+//   .join('users','users.id', 'recipes.user_id')
+//   .select(
+//     'users.id',
+//     'recipes_id',
+//     'recipes.parent_id',
+//     'recipes.title as title',
+//     'recipes.description',
+//     'recipes.time_required',
+//     'recipes.difficulty',
+//     'recipes.budget'
+//   )
+//   .where('recipes.id', id )
+//   .update(recipeUpdate)
+//   return editRecipeInfo
+// }
+
+async function editRecipeInfoByRecipeId(id, body) { 
+  const { title, description, time_required, difficulty, budget, parent_id } = body;
+  return  await db.transaction(async trx => { 
+    try { 
+        
+        await trx('recipes')
+        .update('title', title)
+        .where('recipes.id', id)
+        await trx('recipes')
+        .update('description', description)
+        .where('recipes.id', id)
+        await trx('recipes')
+        .update('time_required', time_required)
+        .where('recipes.id', id)
+        await trx('recipes')
+        .update('difficulty', difficulty)
+        .where('recipes.id', id)
+        await trx('recipes')
+        .update('budget', budget)
+        .where('recipes.id', id)
+
+        return await trx('recipes')
+        .join('users', 'users.id', 'recipes.user_id')
+        .select('users.id',
+                'recipes_id',
+                'recipes.parent_id',
+                'recipes.title as title',
+                'recipes.description',
+                'recipes.time_required',
+                'recipes.difficulty',
+                'recipes.budget' 
+        );
+    } catch (error) { 
+      console.log(error);
+      throw(error)
+    }
+  });
+};
+
 
 async function editTag(id, tagUpdate) { 
   const editTag = await db('recipe_tags')

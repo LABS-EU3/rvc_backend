@@ -20,7 +20,7 @@ router.get('/:id', validateId, getRecipeById);
 router.post('/', validateToken, requiredFields, addRecipe);
 
 //sam
-router.put('/:id/recipeinfo', validateId, editRecipeInfo)
-router.put('/:id/tags', validateId, requiredFields, editTag)
-router.put('/:id/categories', validateId, requiredFields, editCategory)
+router.put('/:id/recipe-info', validateId, editRecipeInfo)
+router.put('/:id/tags', validateId, editTag)
+router.put('/:id/categories', validateId, editCategory)
 module.exports = router;
