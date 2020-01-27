@@ -28,7 +28,7 @@ module.exports = {
 //   return editRecipeInfo
 // }
 
-async function editRecipeInfoByRecipeId(id, body) { 
+async function editRecipeInfo(id, body) { 
   const { title, description, time_required, difficulty, budget, parent_id } = body;
   return  await db.transaction(async trx => { 
     try { 

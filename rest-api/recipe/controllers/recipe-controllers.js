@@ -54,15 +54,12 @@ async function editRecipeInfo(req, res) {
   const { id } = req.params;
   try { 
     const editRecipe = await dbRecipe.editRecipeInfo(id, req.body);
-   editRecipe ?
-      res.status(200).json({ message: 'recipe successfully updated'})
-      :
-      res.status(401).json({message: 'recipe id does not match '})
+   editRecipe
+    ? res.status(200).json({ message: 'recipe successfully updated'})
+    : res.status(401).json({message: 'recipe id does not match '})
     }
     catch(error) { 
-    res.status(500).json({ 
-      message: `update unsuccessful of for `+ id
-    })
+      res.status(500).json({...error})
   }
 }
 
@@ -70,15 +67,12 @@ async function editTag(req, res) {
   const { id } = req.params; 
   try { 
     const editTag = await dbRecipe.editTag( id, req.body);
-    editTag ? 
-    res.status(200).json({ message: 'tags succesffully updated'})
-    : 
-    res.status(401).json({ message: 'tag id does nont match '})
+    editTag 
+    ? res.status(200).json({ message: 'tags succesffully updated'})
+    : res.status(401).json({ message: 'tag id does nont match '})
   }
   catch(error) { 
-    res.status(500).json({ 
-      message: `update unsuccesful for id` + id
-    })
+    res.status(500).json({...error})
   }
 }
 
