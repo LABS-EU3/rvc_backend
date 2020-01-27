@@ -332,7 +332,8 @@ async function updateIngredientByRecipeId(body, recipe_id) {
       const recipeIngredientsIds = await trx('recipe_ingredients as rI')
         .where('rI.recipe_id', recipe_id)
         .select('rI.id');
-      const { id } = recipeIngredientsIds[index]; // (The id of the recipe_ingredients row to change!)
+      const { id } = recipeIngredientsIds[index] ? recipeIngredientsIds[index] : {id: undefined}; // (The id of the recipe_ingredients row to be updated!)
+      if (!id) { throw "Index is out of range!" };
 
       await trx('recipe_ingredients')
         .update('quantity', quantity)
@@ -436,7 +437,8 @@ async function removeIngredientFromRecipe(body, recipe_id) {
       const recipeIngredientsIds = await trx('recipe_ingredients as rI')
         .where('rI.recipe_id', recipe_id)
         .select('rI.id');
-      const { id } = recipeIngredientsIds[index]; // (The id of the recipe_ingredients row to be deleted!)
+      const { id } = recipeIngredientsIds[index] ? recipeIngredientsIds[index] : {id: undefined}; // (The id of the recipe_ingredients row to be deleted!)
+      if (!id) { throw "Index is out of range!" };
 
       const ingredientIdObject = await trx('recipe_ingredients as rI')
         .join('ingredients as i', 'rI.ingredient_id', 'i.id')
@@ -472,7 +474,7 @@ async function removeIngredientFromRecipe(body, recipe_id) {
 
       return ingredientToBeDeleted;
     } catch (err) {
-      console.log(err);
+      console.log(err, err.code);
       throw(err);
     }
   });
