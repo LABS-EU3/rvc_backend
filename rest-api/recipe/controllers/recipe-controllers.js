@@ -4,7 +4,11 @@ const errorHandler = require('../middlewares/errorHandler');
 module.exports = {
   getRecipes,
   getRecipeById,
-  addRecipe
+  addRecipe,
+  addImageToRecipe,
+  updateIngredientByRecipeId,
+  addIngredientToRecipe,
+  removeIngredientFromRecipe
 };
 
 async function getRecipes(req, res) {
@@ -47,3 +51,51 @@ async function addRecipe(req, res) {
     });
   }
 }
+
+async function addImageToRecipe(req, res) {
+  try {
+    const recipeWithImages = await dbRecipe.addImageToRecipe(req.body, req.params.id);
+    res.status(201).json(recipeWithImages);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an error adding the image to the recipe.',
+      error: errorHandler(err)
+    });
+  };
+};
+
+async function updateIngredientByRecipeId(req, res) {
+  try{
+    const ingredients = await dbRecipe.updateIngredientByRecipeId(req.body, req.params.id);
+    res.status(200).json(ingredients);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an error updating the ingredient.',
+      error: errorHandler(err)
+    });
+  };
+};
+
+async function addIngredientToRecipe(req, res) {
+  try {
+    const ingredients = await dbRecipe.addIngredientToRecipe(req.body, req.params.id);
+    res.status(200).json(ingredients);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an error adding an ingredient to the recipe.',
+      error: errorHandler(err)
+    });
+  };
+};
+
+async function removeIngredientFromRecipe(req, res) {
+  try {
+    const ingredient = await dbRecipe.removeIngredientFromRecipe(req.body, req.params.id);
+    res.status(200).json(ingredient);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an error removing the ingredient from the recipe.',
+      error: errorHandler(err)
+    });
+  };
+};
