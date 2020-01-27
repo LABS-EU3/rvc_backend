@@ -474,7 +474,7 @@ async function removeIngredientFromRecipe(body, recipe_id) {
 
       return ingredientToBeDeleted;
     } catch (err) {
-      console.log(err, err.code);
+      console.log(err);
       throw(err);
     }
   });
