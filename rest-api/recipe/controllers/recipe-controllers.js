@@ -5,7 +5,7 @@ module.exports = {
   getRecipes,
   getRecipeById,
   addRecipe,
-  editRecipe,
+  editRecipeInfo,
   editTag
 };
 
@@ -50,7 +50,7 @@ async function addRecipe(req, res) {
   }
 }
 //sam 
-async function editRecipe(req, res) { 
+async function editRecipeInfo(req, res) { 
   const { id } = req.params;
   try { 
     const editRecipe = await dbRecipe.editRecipe(id, req.body);

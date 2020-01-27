@@ -4,7 +4,7 @@ const {
   getRecipes,
   getRecipeById,
   addRecipe,
-  editRecipe,
+  editRecipeInfo,
   editTag,
   editCategory
 } = require('../controllers/recipe-controllers');
@@ -20,7 +20,7 @@ router.get('/:id', validateId, getRecipeById);
 router.post('/', validateToken, requiredFields, addRecipe);
 
 //sam
-router.put('/recipe/:id', validateId, requiredFields, editRecipe)
-router.put('/tags/:id', validateId, requiredFields, editTag)
-router.put('/categories/:id', validateId, requiredFields, editCategory)
+router.put('/:id/recipeinfo', validateId, editRecipeInfo)
+router.put('/:id/tags', validateId, requiredFields, editTag)
+router.put('/:id/categories', validateId, requiredFields, editCategory)
 module.exports = router;
