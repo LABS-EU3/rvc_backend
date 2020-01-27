@@ -6,7 +6,8 @@ module.exports = {
   getRecipeById,
   addRecipe,
   editRecipeInfo,
-  editTag
+  editTag,
+  editCategory
 };
 
 async function getRecipes(req, res) {
@@ -59,7 +60,10 @@ async function editRecipeInfo(req, res) {
     : res.status(401).json({message: 'recipe id does not match '})
     }
     catch(error) { 
-      res.status(500).json({...error})
+      res.status(500).json({ 
+        message: `update unsuccesful for id` + id, 
+        error
+      })
   }
 }
 
@@ -72,7 +76,10 @@ async function editTag(req, res) {
     : res.status(401).json({ message: 'tag id does nont match '})
   }
   catch(error) { 
-    res.status(500).json({...error})
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id, 
+      error
+    })
   }
 }
 
@@ -85,6 +92,9 @@ async function editCategory(req, res){
     : res.status(401).json({ message: 'tag id does not match '})
   }
   catch(error) { 
-    res.status(500).json({...error})
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id, 
+      error
+    })
   }
-  }
+}
