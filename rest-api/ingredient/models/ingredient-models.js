@@ -169,14 +169,20 @@ async function updateIngredientByRecipeId(body, recipe_id) {
         .where('i.name', name)
         .select('i.id');
 
-      const ingredient_id = ingredient_idObject ? ingredient_idObject.id : undefined;
-      
+      const ingredient_id = ingredient_idObject
+        ? ingredient_idObject.id
+        : undefined;
+
       // In both cases, _quantity_ and _unit_id_ need to be updated in the 'recipe_ingredients' table.
       const recipeIngredientsIds = await trx('recipe_ingredients as rI')
         .where('rI.recipe_id', recipe_id)
         .select('rI.id');
-      const { id } = recipeIngredientsIds[index] ? recipeIngredientsIds[index] : {id: undefined}; // (The id of the recipe_ingredients row to be updated!)
-      if (!id) { throw "Index is out of range!" };
+      const { id } = recipeIngredientsIds[index]
+        ? recipeIngredientsIds[index]
+        : { id: undefined }; // (The id of the recipe_ingredients row to be updated!)
+      if (!id) {
+        throw 'Index is out of range!';
+      }
 
       await trx('recipe_ingredients')
         .update('quantity', quantity)
@@ -192,7 +198,6 @@ async function updateIngredientByRecipeId(body, recipe_id) {
         await trx('recipe_ingredients')
           .update('ingredient_id', ingredient_id)
           .where('id', id);
-
       } else {
         // Otherwise, need to first add a new ingredient with _name_ to the 'ingredients' table, ...
         const [newIngredientId] = await trx('ingredients')
@@ -209,15 +214,10 @@ async function updateIngredientByRecipeId(body, recipe_id) {
         .join('units as u', 'rI.unit_id', 'u.id')
         .join('ingredients as i', 'rI.ingredient_id', 'i.id')
         .where('rI.recipe_id', recipe_id)
-        .select(
-          'i.name',
-          'rI.quantity',
-          'u.name as unit'
-        );
+        .select('i.name', 'rI.quantity', 'u.name as unit');
     } catch (err) {
       console.log(err);
-      throw(err);
+      throw err;
     }
   });
-};
-
+}

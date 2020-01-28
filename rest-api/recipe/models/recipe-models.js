@@ -3,50 +3,50 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   getRecipes,
   getRecipeById,
-  addRecipeTransaction, 
+  addRecipeTransaction,
   editRecipeInfo,
   editCategory
 };
 
 //sam
 
-async function editRecipeInfo(id, body) { 
-  return  await db.transaction(async trx => { 
-    try { 
-        await trx('recipes')
+async function editRecipeInfo(id, body) {
+  return await db.transaction(async trx => {
+    try {
+      await trx('recipes')
         .update('title', body.title)
-        .where('recipes.id', id)
-        await trx('recipes')
+        .where('recipes.id', id);
+      await trx('recipes')
         .update('description', body.description)
-        .where('recipes.id', id)
-        await trx('recipes')
+        .where('recipes.id', id);
+      await trx('recipes')
         .update('time_required', body.time_required)
-        .where('recipes.id', id)
-        await trx('recipes')
+        .where('recipes.id', id);
+      await trx('recipes')
         .update('difficulty', body.difficulty)
-        .where('recipes.id', id)
-        await trx('recipes')
+        .where('recipes.id', id);
+      await trx('recipes')
         .update('budget', body.budget)
-        .where('recipes.id', id)
+        .where('recipes.id', id);
 
-        return await trx('recipes')
+      return await trx('recipes')
         .join('users', 'users.id', 'recipes.user_id')
         .select(
-                'users.id',
-                'recipes.id',
-                'recipes.parent_id',
-                'recipes.title as title',
-                'recipes.description',
-                'recipes.time_required',
-                'recipes.difficulty',
-                'recipes.budget' 
+          'users.id',
+          'recipes.id',
+          'recipes.parent_id',
+          'recipes.title as title',
+          'recipes.description',
+          'recipes.time_required',
+          'recipes.difficulty',
+          'recipes.budget'
         );
-    } catch (error) { 
+    } catch (error) {
       console.log(error);
-      throw(error)
+      throw error;
     }
   });
-};
+}
 
 async function getRecipes() {
   const recipes = await db('recipes')
@@ -308,4 +308,3 @@ async function addRecipeTransaction(body) {
 
   return getRecipeById(transaction);
 }
-
