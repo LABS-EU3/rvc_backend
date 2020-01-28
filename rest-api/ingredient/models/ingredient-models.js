@@ -3,7 +3,9 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   findAllIngredients,
   findIngredientBy,
-  addIngredient
+  addIngredient,
+  removeIngredientFromRecipe,
+  addIngredientToRecipe
 };
 
 async function findAllIngredients() {
@@ -23,4 +25,124 @@ async function addIngredient(name) {
     .returning('*')
     .insert(name);
   return ingredient;
+}
+
+async function removeIngredientFromRecipe(body, recipe_id) {
+  const { index } = body;
+
+  return await db.transaction(async trx => {
+    try {
+      const recipeIngredientsIds = await trx('recipe_ingredients')
+        .where('recipe_ingredients.recipe_id', recipe_id)
+        .select('recipe_ingredients.id');
+      const { id } = recipeIngredientsIds[index]
+        ? recipeIngredientsIds[index]
+        : { id: undefined }; // (The id of the recipe_ingredients row to be deleted!)
+      if (!id) {
+        throw 'Index is out of range!';
+      }
+
+      const ingredientIdObject = await trx('recipe_ingredients')
+        .join(
+          'ingredients',
+          'recipe_ingredients.ingredient_id',
+          'ingredients.id'
+        )
+        .where('recipe_ingredients.id', id)
+        .select('ingredients.id')
+        .first();
+      const ingredient_id = ingredientIdObject.id;
+
+      // Need to grab the ingredient before deleting it!
+      const [ingredientToBeDeleted] = await trx('recipe_ingredients')
+        .join(
+          'ingredients',
+          'recipe_ingredients.ingredient_id',
+          'ingredients.id'
+        )
+        .join('units', 'recipe_ingredients.unit_id', 'units.id')
+        .where('recipe_ingredients.id', id)
+        .select(
+          'ingredients.name',
+          'recipe_ingredients.quantity',
+          'units.name as unit'
+        );
+
+      await trx('recipe_ingredients')
+        .where('recipe_ingredients.id', id)
+        .del();
+
+      // If the ingredient isn't featured in _any_ recipe, might as well delete it from the 'ingredients' table!
+      const ingredientAppearances = await trx('recipe_ingredients').where(
+        'recipe_ingredients.ingredient_id',
+        ingredient_id
+      );
+
+      if (ingredientAppearances.length === 0) {
+        await trx('ingredients')
+          .where('ingredients.id', ingredient_id)
+          .del();
+      }
+
+      return ingredientToBeDeleted;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  });
+}
+
+async function addIngredientToRecipe(body, recipe_id) {
+  const { name, quantity, unit_id } = body;
+
+  return await db.transaction(async trx => {
+    try {
+      // Similar thinking as above: need to check whether the ingredient already exists
+      // in the 'ingredients' table before posting!
+      const [ingredient_idObject] = await trx('ingredients')
+        .where('ingredients.name', name)
+        .select('ingredients.id');
+
+      const ingredient_id = ingredient_idObject
+        ? ingredient_idObject.id
+        : undefined;
+
+      if (ingredient_id) {
+        await trx('recipe_ingredients').insert({
+          recipe_id,
+          ingredient_id,
+          quantity,
+          unit_id
+        });
+      } else {
+        const [newIngredientId] = await trx('ingredients')
+          .insert({ name })
+          .returning('id');
+
+        await trx('recipe_ingredients').insert({
+          recipe_id,
+          ingredient_id: newIngredientId,
+          quantity,
+          unit_id
+        });
+      }
+
+      return await trx('recipe_ingredients')
+        .join(
+          'ingredients',
+          'recipe_ingredients.ingredient_id',
+          'ingredients.id'
+        )
+        .join('units', 'recipe_ingredients.unit_id', 'units.id')
+        .where('recipe_ingredients.recipe_id', recipe_id)
+        .select(
+          'ingredients.name',
+          'recipe_ingredients.quantity',
+          'units.name as unit'
+        );
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  });
 }
