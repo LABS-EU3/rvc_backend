@@ -4,9 +4,7 @@ const {
   getRecipes,
   getRecipeById,
   addRecipe,
-  editRecipeInfo,
-  editTag,
-  editCategory
+  editRecipeInfo
 } = require('../controllers/recipe-controllers');
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
@@ -21,6 +19,4 @@ router.post('/', validateToken, requiredFields, addRecipe);
 
 //sam
 router.put('/:id/recipe-info', editRecipeInfo)
-router.put('/:id/tags', editTag)
-router.put('/:id/categories', editCategory)
 module.exports = router;
