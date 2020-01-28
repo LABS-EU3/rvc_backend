@@ -1,7 +1,8 @@
 const db = require('../models/category-models')
 
 module.exports = {
-  getCategories
+  getCategories,
+  editCategory
 };
 
 async function getCategories(req, res) {
@@ -22,5 +23,21 @@ async function getCategories(req, res) {
         message: 'There was an error retrieving the saved categories',
         error
       });
+  }
+}
+
+async function editCategory(req, res){ 
+  const { id } = req.params;
+  try{ 
+    const editCategory= await dbRecipe.editCategory( id,req.body);
+    editCategory 
+    ? res.status(200).json({ message: 'tags succesffully updated'})
+    : res.status(401).json({ message: 'tag id does not match '})
+  }
+  catch(error) { 
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id, 
+      error
+    })
   }
 }

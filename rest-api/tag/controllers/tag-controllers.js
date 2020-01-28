@@ -1,7 +1,8 @@
 const db = require('../models/tag-models')
 
 module.exports = {
-  getTags
+  getTags,
+  editTag,
 };
 
 async function getTags(req, res) {
@@ -22,5 +23,21 @@ async function getTags(req, res) {
         message: 'There was an error retrieving the saved tags',
         error
       });
+  }
+}
+
+async function editTag(req, res) { 
+  const { id } = req.params; 
+  try { 
+    const editTag = await dbRecipe.editTag( id, req.body);
+    editTag 
+    ? res.status(200).json({ message: 'tags succesffully updated'})
+    : res.status(401).json({ message: 'tag id does nont match '})
+  }
+  catch(error) { 
+    res.status(500).json({ 
+      message: `update unsuccesful for id` + id, 
+      error
+    })
   }
 }
