@@ -4,8 +4,7 @@ module.exports = {
   getRecipes,
   getRecipeById,
   addRecipeTransaction,
-  editRecipeInfo,
-  editCategory
+  editRecipeInfo
 };
 
 //sam
