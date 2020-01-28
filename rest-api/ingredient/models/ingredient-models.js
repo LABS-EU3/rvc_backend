@@ -5,7 +5,8 @@ module.exports = {
   findIngredientBy,
   addIngredient,
   removeIngredientFromRecipe,
-  addIngredientToRecipe
+  addIngredientToRecipe,
+  updateIngredientByRecipeId
 };
 
 async function findAllIngredients() {
