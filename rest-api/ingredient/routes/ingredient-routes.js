@@ -1,12 +1,11 @@
 const router = require('express').Router();
 
-const { getIngredients } = require('../controllers/ingredient-controllers');
+const { getIngredients, updateIngredientByRecipeId, addIngredientToRecipe, removeIngredientFromRecipe } = require('../controllers/ingredient-controllers');
 
-const { validateId } = require('../../recipe/middlewares/validateID');
 
 router.get('/', getIngredients);
-router.put('/:id', /* validateToken, */ validateId, updateIngredientByRecipeId);
-router.post('/:id', /* validateToken, */ validateId, addIngredientToRecipe);
-router.delete('/:id', /* validateToken, */ validateId, removeIngredientFromRecipe);
+router.put('/:id', updateIngredientByRecipeId);
+router.post('/:id', addIngredientToRecipe);
+router.delete('/:id', removeIngredientFromRecipe);
 
 module.exports = router;

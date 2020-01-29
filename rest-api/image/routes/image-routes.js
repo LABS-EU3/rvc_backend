@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { validateId } = require('../../recipe/middlewares/validateID');
+const { addImageToRecipe } = require('../controllers/image-controllers');
 
-router.post('/:id', /* validateToken, */ validateId, addImageToRecipe);
+router.post('/:id', addImageToRecipe);
 
 module.exports = router;
