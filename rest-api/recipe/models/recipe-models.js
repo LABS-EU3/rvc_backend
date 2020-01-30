@@ -3,6 +3,7 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   getRecipes,
   getRecipeById,
+  cloneWithID,
   addRecipeTransaction,
   editRecipeInfo
 };
@@ -68,6 +69,55 @@ async function getRecipes() {
     .count('likes.user_id as likes')
     .groupBy('recipes.id', 'users.id', 'images.url');
   return recipes;
+}
+
+async function cloneWithID(id, token) {
+  const recipe = await db('recipes')
+    .where('recipes.id', id)
+    .first();
+  recipe.user_id = token.sub;
+  delete recipe.created_at;
+  delete recipe.id;
+
+  const recipe_categories = await db('recipe_categories')
+    .where('recipe_id', id)
+    .map(i => i.category_id);
+
+  const recipe_tags = await db('recipe_tags')
+    .where('recipe_id', id)
+    .map(i => i.tag_id);
+
+  const images = await db('recipe_images')
+    .join('recipes', 'recipes.id', 'recipe_images.recipe_id')
+    .join('images', 'images.id', 'recipe_images.image_id')
+    .select('images.url')
+    .where('recipes.id', id)
+    .map(i => i.url);
+
+  const recipe_ingredients = await db('recipe_ingredients')
+    .select('ingredient_id', 'quantity', 'unit_id')
+    .where('recipe_id', id);
+
+  const instructions = await db('recipe_instructions')
+    .join(
+      'instructions',
+      'instructions.id',
+      'recipe_instructions.instruction_id'
+    )
+    .select('instructions.text')
+    .where('recipe_instructions.recipe_id', id)
+    .map(i => i.text);
+
+  const body = {
+    recipe,
+    recipe_categories,
+    recipe_tags,
+    images,
+    recipe_ingredients,
+    instructions
+  };
+
+  return addRecipeTransaction(body, true)
 }
 
 async function getRecipeById(id) {
@@ -139,7 +189,7 @@ async function getRecipeById(id) {
   return { ...recipe, tags, categories, images, instructions, ingredients };
 }
 
-async function addRecipeTransaction(body) {
+async function addRecipeTransaction(body, parent = false) {
   const transaction = await db.transaction(async trx => {
     try {
       // body.recipes === object
@@ -155,9 +205,12 @@ async function addRecipeTransaction(body) {
       const [recipe] = await trx('recipes')
         .insert(body.recipe)
         .returning('*');
-      const updatedRecipe = await trx('recipes')
-        .where('recipes.id', recipe.id)
-        .update('parent_id', recipe.id);
+
+      if(parent === false){
+        const updatedRecipe = await trx('recipes')
+          .where('recipes.id', recipe.id)
+          .update('parent_id', recipe.id);
+      }
 
       // INSTRUCTIONS
       const newInstructions = body.instructions.map(instruction => {

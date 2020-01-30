@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {
   getRecipes,
   getRecipeById,
+  postCloneWithID,
   addRecipe,
   editRecipeInfo
 } = require('../controllers/recipe-controllers');
@@ -15,6 +16,7 @@ const {
 
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
+router.post('/:id', validateToken, validateId, postCloneWithID);
 router.post('/', validateToken, requiredFields, addRecipe);
 
 //sam

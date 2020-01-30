@@ -4,6 +4,7 @@ const errorHandler = require('../middlewares/errorHandler');
 module.exports = {
   getRecipes,
   getRecipeById,
+  postCloneWithID,
   addRecipe,
   editRecipeInfo
 };
@@ -24,10 +25,21 @@ async function getRecipes(req, res) {
   }
 }
 
-async function getRecipeById(req, res) {
-  const { id } = req.params;
+async function postCloneWithID(req, res) {
   try {
-    const recipe = await dbRecipe.getRecipeById(id);
+    const recipe = await dbRecipe.cloneWithID(req.params.id, req.decoded);
+    res.status(200).json(recipe);
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was an error getting the recipe of id ' + id,
+      error
+    });
+  }
+}
+
+async function getRecipeById(req, res) {
+  try {
+    const recipe = await dbRecipe.getRecipeById(req.params.id);
     res.status(200).json(recipe);
   } catch (error) {
     res.status(500).json({
