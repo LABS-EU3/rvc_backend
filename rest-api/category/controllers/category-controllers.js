@@ -9,7 +9,7 @@ async function getCategories(req, res) {
   try {
     const categories = await db.findAllCategories();
     if (categories.length) {
-      res.status(200).json(categories);      
+      res.status(200).json(categories);
     }
     else {
       res
@@ -26,17 +26,15 @@ async function getCategories(req, res) {
   }
 }
 
-async function editCategory(req, res){ 
+async function editCategory(req, res){
   const { id } = req.params;
   try{ 
-    const editCategory= await dbRecipe.editCategory( id,req.body);
-    editCategory 
-    ? res.status(200).json({ message: 'tags succesffully updated'})
-    : res.status(401).json({ message: 'tag id does not match '})
+    const editCategory= await db.editCategory(id, req.body);
+    res.status(200).json(editCategory);
   }
   catch(error) { 
-    res.status(500).json({ 
-      message: `update unsuccesful for id` + id, 
+    res.status(500).json({
+      message: `update unsuccesful for id` + id,
       error
     })
   }
