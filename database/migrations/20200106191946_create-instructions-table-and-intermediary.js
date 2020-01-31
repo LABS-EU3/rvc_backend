@@ -16,7 +16,9 @@ exports.up = async function(knex) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('instructions');
+        .inTable('instructions')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
       tbl.primary(['recipe_id', 'instruction_id']);
     });
 };
