@@ -5,7 +5,7 @@ const { getTags,
 } = require('../controllers/tag-controllers');
 
 router.get('/', getTags);
-router.put('/:id/tags', editTag)
+router.put('/:id', editTag)
 
 
 module.exports = router;
