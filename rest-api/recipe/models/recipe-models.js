@@ -11,11 +11,11 @@ module.exports = {
 //sam
 
 async function editRecipeInfo(id, body) {
-  const isUpdate = await db('recipes')
+  const isUpdated = await db('recipes')
     .update(body)
     .where('recipes.id', id);
 
-  if (isUpdate) {
+  if (isUpdated) {
     return { message: 'Recipe information updated sucessfully.' };
   } else {
     throw { error: 'Recipe information not updated' };
