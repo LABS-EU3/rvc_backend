@@ -11,41 +11,15 @@ module.exports = {
 //sam
 
 async function editRecipeInfo(id, body) {
-  return await db.transaction(async trx => {
-    try {
-      await trx('recipes')
-        .update('title', body.title)
-        .where('recipes.id', id);
-      await trx('recipes')
-        .update('description', body.description)
-        .where('recipes.id', id);
-      await trx('recipes')
-        .update('time_required', body.time_required)
-        .where('recipes.id', id);
-      await trx('recipes')
-        .update('difficulty', body.difficulty)
-        .where('recipes.id', id);
-      await trx('recipes')
-        .update('budget', body.budget)
-        .where('recipes.id', id);
+  const isUpdate = await db('recipes')
+    .update(body)
+    .where('recipes.id', id);
 
-      return await trx('recipes')
-        .join('users', 'users.id', 'recipes.user_id')
-        .select(
-          'users.id',
-          'recipes.id',
-          'recipes.parent_id',
-          'recipes.title as title',
-          'recipes.description',
-          'recipes.time_required',
-          'recipes.difficulty',
-          'recipes.budget'
-        );
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  });
+  if (isUpdate) {
+    return { message: 'Recipe information updated sucessfully.' };
+  } else {
+    throw { error: 'Recipe information not updated' };
+  }
 }
 
 async function getRecipes() {
@@ -117,7 +91,7 @@ async function cloneWithID(id, token) {
     instructions
   };
 
-  return addRecipeTransaction(body, true)
+  return addRecipeTransaction(body, true);
 }
 
 async function getRecipeById(id) {
@@ -206,7 +180,7 @@ async function addRecipeTransaction(body, parent = false) {
         .insert(body.recipe)
         .returning('*');
 
-      if(parent === false){
+      if (parent === false) {
         const updatedRecipe = await trx('recipes')
           .where('recipes.id', recipe.id)
           .update('parent_id', recipe.id);

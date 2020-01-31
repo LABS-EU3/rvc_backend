@@ -20,5 +20,5 @@ router.post('/:id', validateToken, validateId, postCloneWithID);
 router.post('/', validateToken, requiredFields, addRecipe);
 
 //sam
-router.put('/:id/recipe-info', editRecipeInfo);
+router.put('/:id/', editRecipeInfo);
 module.exports = router;
