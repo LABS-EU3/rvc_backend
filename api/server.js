@@ -20,6 +20,8 @@ const ingredientRoute = require('../rest-api/ingredient/routes/ingredient-routes
 const profileInfoRoute = require('../rest-api/profile-info/routes/profile-info-routes');
 const likesRoute = require('../rest-api/likes/routes/likes-routes');
 const imagesRoute = require('../rest-api/image/routes/image-routes');
+const instructionsRoute = require('../rest-api/instructions/routes/instructions-routes');
+
 
 
 
@@ -34,6 +36,8 @@ server.use('/api/ingredient', ingredientRoute);
 server.use('/api/profile', profileInfoRoute);
 server.use('/api/likes/', likesRoute )
 server.use('/api/images/', imagesRoute )
+server.use('/api/instruction/', instructionsRoute )
+
 
 
 server.get('/', (req, res) => {
