@@ -60,7 +60,7 @@ async function addRecipe(req, res) {
     });
   }
 }
-//sam
+
 async function editRecipeInfo(req, res) {
   const { id } = req.params;
   try {

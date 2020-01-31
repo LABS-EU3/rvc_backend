@@ -21,9 +21,7 @@ exports.up = async function(knex) {
       .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-    tbl
-      .integer('parent_id')
-      .unsigned();
+    tbl.integer('parent_id').unsigned();
     tbl.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   });
 };

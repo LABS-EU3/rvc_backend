@@ -13,8 +13,7 @@ async function findAllProfiles() {
 }
 
 async function findProfileByUserId(id) {
-  const [profile] = await db('profile_info')
-    .where({ user_id: id });
+  const [profile] = await db('profile_info').where({ user_id: id });
   return profile;
 }
 
@@ -29,6 +28,6 @@ async function updateProfile(id, profileDetails) {
   const [updatedProfile] = await db('profile_info')
     .where({ user_id: id })
     .returning('*')
-    .update(profileDetails)
-  return updatedProfile
+    .update(profileDetails);
+  return updatedProfile;
 }

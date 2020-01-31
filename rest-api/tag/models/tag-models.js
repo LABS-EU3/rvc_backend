@@ -26,7 +26,7 @@ async function addTag(name) {
   return tag;
 }
 
-//sam
+
 async function editTag(id, body) {
   const isUpdated = await db('recipe_tags')
     .update('tag_id', body.new.tag_id)

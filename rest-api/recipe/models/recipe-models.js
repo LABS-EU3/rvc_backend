@@ -8,7 +8,7 @@ module.exports = {
   editRecipeInfo
 };
 
-//sam
+
 
 async function editRecipeInfo(id, body) {
   const isUpdated = await db('recipes')
