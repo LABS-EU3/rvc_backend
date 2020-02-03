@@ -60,14 +60,12 @@ async function addRecipe(req, res) {
     });
   }
 }
-//sam
+
 async function editRecipeInfo(req, res) {
   const { id } = req.params;
   try {
     const editRecipe = await dbRecipe.editRecipeInfo(id, req.body);
-    editRecipe
-      ? res.status(200).json({ message: 'recipe successfully updated' })
-      : res.status(401).json({ message: 'recipe id does not match ' });
+    res.status(201).json(editRecipe);
   } catch (error) {
     res.status(500).json({
       message: `update unsuccesful for id` + id,

@@ -1,12 +1,12 @@
-const db = require('../../../database/dbConfig')
+const db = require('../../../database/dbConfig');
 
 module.exports = {
-    getUserById
-}
+  getUserById
+};
 
 function getUserById(id) {
-    return db('users')
-        .select('id', 'username', 'email')
-        .where({ id })
-        .first();
+  return db('users')
+    .select('id', 'username', 'email')
+    .where({ id })
+    .first();
 }
