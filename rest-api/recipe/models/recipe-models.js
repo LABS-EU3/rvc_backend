@@ -41,7 +41,15 @@ async function getRecipes() {
       'images.url as imageUrl'
     )
     .count('likes.user_id as likes')
-    .groupBy('recipes.id', 'users.id', 'images.url');
+    .groupBy('recipes.id', 'users.id', 'images.url')
+    .map(recipe => {
+      return{
+        ...recipe,
+        likes: Number(recipe.likes)
+    }
+    })
+
+
   return recipes;
 }
 
@@ -81,7 +89,7 @@ async function cloneWithID(id, token) {
     .select('instructions.text')
     .where('recipe_instructions.recipe_id', id)
     .map(i => i.text);
-
+  
   const body = {
     recipe,
     recipe_categories,
@@ -159,8 +167,11 @@ async function getRecipeById(id) {
       'units.name as unit'
     )
     .where('recipes.id', id);
-
-  return { ...recipe, tags, categories, images, instructions, ingredients };
+  const sanitizedRecipe = {
+    ...recipe,
+    likes: Number(recipe.likes)
+  }
+  return { ...sanitizedRecipe, tags, categories, images, instructions, ingredients };
 }
 
 async function addRecipeTransaction(body, parent = false) {

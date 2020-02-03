@@ -7,6 +7,17 @@ module.exports = {
   deleteLike
 };
 
+async function getLikesByRecipeID(id){
+  const likes = await db('likes')
+  .count('likes.user_id as likes')
+  .leftJoin('recipes','likes.recipe_id', 'recipes.id')
+  .where('likes.recipe_id', id)
+  .groupBy('recipes.id')
+  .first();
+
+  return Number(likes.likes)
+}
+
 async function getLikedRecipesByUserId(id) {
   const recipes = await db('likes')
     .select(
@@ -26,9 +37,21 @@ async function getLikedRecipesByUserId(id) {
     .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
     .leftJoin('images', 'images.id', 'recipe_images.image_id')
     .where('likes.user_id', id);
+    
+    const recipeWithLikes = [];
+
+    // .map() doesn't work with async
+    // need to find SQL query in order to optimize this
+    for(recipe of recipes){
+      recipeWithLikes.push({
+        ...recipe,
+        likes: await getLikesByRecipeID(recipe.id)
+      })
+    }
+
 
   return recipes.length
-    ? recipes
+    ? recipeWithLikes
     : { message: 'The id provided is invalid or has expired' };
 }
 
