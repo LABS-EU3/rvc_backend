@@ -36,12 +36,12 @@ async function getLikedRecipesByUserId(id) {
     .leftJoin('images', 'images.id', 'recipe_images.image_id')
     .where('likes.user_id', id);
     
-    const reicpeWithLikes = [];
+    const recipeWithLikes = [];
 
     // .map() doesn't work with async
     // need to find SQL query in order to optimize this
     for(recipe of recipes){
-      reicpeWithLikes.push({
+      recipeWithLikes.push({
         ...recipe,
         ...await getLikesByRecipeID(recipe.id)
       })
@@ -49,7 +49,7 @@ async function getLikedRecipesByUserId(id) {
 
 
   return recipes.length
-    ? reicpeWithLikes
+    ? recipeWithLikes
     : { message: 'The id provided is invalid or has expired' };
 }
 
