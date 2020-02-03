@@ -8,12 +8,14 @@ module.exports = {
 };
 
 async function getLikesByRecipeID(id){
-  return await db('likes')
+  const likes = await db('likes')
   .count('likes.user_id as likes')
   .leftJoin('recipes','likes.recipe_id', 'recipes.id')
   .where('likes.recipe_id', id)
   .groupBy('recipes.id')
   .first();
+
+  return Number(likes.likes)
 }
 
 async function getLikedRecipesByUserId(id) {
@@ -43,7 +45,7 @@ async function getLikedRecipesByUserId(id) {
     for(recipe of recipes){
       recipeWithLikes.push({
         ...recipe,
-        ...await getLikesByRecipeID(recipe.id)
+        likes: await getLikesByRecipeID(recipe.id)
       })
     }
 
