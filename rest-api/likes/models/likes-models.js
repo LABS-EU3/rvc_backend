@@ -3,19 +3,29 @@ const userDb = require('../../recipe/models/recipe-models');
 
 module.exports = {
   getLikedRecipesByUserId,
+  getLikedRecipesOfUserId,
   insertLike,
   deleteLike
 };
 
-async function getLikesByRecipeID(id){
+async function getLikesByRecipeID(id) {
   const likes = await db('likes')
-  .count('likes.user_id as likes')
-  .leftJoin('recipes','likes.recipe_id', 'recipes.id')
-  .where('likes.recipe_id', id)
-  .groupBy('recipes.id')
-  .first();
+    .count('likes.user_id as likes')
+    .leftJoin('recipes', 'likes.recipe_id', 'recipes.id')
+    .where('likes.recipe_id', id)
+    .groupBy('recipes.id')
+    .first();
 
-  return Number(likes.likes)
+  return Number(likes.likes);
+}
+
+async function getLikedRecipesOfUserId(id) {
+  const count = await db('likes')
+    .count('*')
+    .leftJoin('recipes', 'recipes.id', 'likes.recipe_id')
+    .where('recipes.user_id', id)
+    .first();
+  return { likes: Number(count.count) };
 }
 
 async function getLikedRecipesByUserId(id) {
@@ -37,18 +47,17 @@ async function getLikedRecipesByUserId(id) {
     .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
     .leftJoin('images', 'images.id', 'recipe_images.image_id')
     .where('likes.user_id', id);
-    
-    const recipeWithLikes = [];
 
-    // .map() doesn't work with async
-    // need to find SQL query in order to optimize this
-    for(recipe of recipes){
-      recipeWithLikes.push({
-        ...recipe,
-        likes: await getLikesByRecipeID(recipe.id)
-      })
-    }
+  const recipeWithLikes = [];
 
+  // .map() doesn't work with async
+  // need to find SQL query in order to optimize this
+  for (recipe of recipes) {
+    recipeWithLikes.push({
+      ...recipe,
+      likes: await getLikesByRecipeID(recipe.id)
+    });
+  }
 
   return recipes.length
     ? recipeWithLikes

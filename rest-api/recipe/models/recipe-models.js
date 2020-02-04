@@ -3,6 +3,7 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   getRecipes,
   getRecipeById,
+  getRecipesByUserId,
   cloneWithID,
   addRecipeTransaction,
   editRecipeInfo
@@ -40,6 +41,38 @@ async function getRecipes() {
       'recipes.budget',
       'images.url as imageUrl'
     )
+    .count('likes.user_id as likes')
+    .groupBy('recipes.id', 'users.id', 'images.url')
+    .map(recipe => {
+      return{
+        ...recipe,
+        likes: Number(recipe.likes)
+    }
+    })
+
+
+  return recipes;
+}
+
+async function getRecipesByUserId(id) {
+  const recipes = await db('recipes')
+    .leftJoin('recipe_images', 'recipe_images.recipe_id', 'recipes.id')
+    .leftJoin('images', 'images.id', 'recipe_images.image_id')
+    .leftJoin('users', 'users.id', 'recipes.user_id')
+    .leftJoin('likes', 'likes.recipe_id', 'recipes.id')
+    .select(
+      'users.id',
+      'recipes.id',
+      'recipes.parent_id',
+      'users.username as author',
+      'recipes.title as recipe_title',
+      'recipes.description',
+      'recipes.time_required',
+      'recipes.difficulty',
+      'recipes.budget',
+      'images.url as imageUrl'
+    )
+    .where('recipes.user_id', id)
     .count('likes.user_id as likes')
     .groupBy('recipes.id', 'users.id', 'images.url')
     .map(recipe => {

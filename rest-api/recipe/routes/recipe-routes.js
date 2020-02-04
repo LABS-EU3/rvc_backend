@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {
   getRecipes,
   getRecipeById,
+  getRecipeByUserId,
   postCloneWithID,
   addRecipe,
   editRecipeInfo
@@ -16,6 +17,7 @@ const {
 
 router.get('/', getRecipes);
 router.get('/:id', validateId, getRecipeById);
+router.get('/user/:id', getRecipeByUserId);
 router.post('/:id', validateToken, validateId, postCloneWithID);
 router.post('/', validateToken, requiredFields, addRecipe);
 
