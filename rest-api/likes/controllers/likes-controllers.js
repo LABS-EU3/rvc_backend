@@ -3,6 +3,7 @@ const errorHandler = require('../middlewares/errorHandler');
 
 module.exports = {
   getLikedRecipesByUserId,
+  getLikedRecipesOfUserId,
   postLikeRecipe,
   deleteLike
 };
@@ -10,6 +11,18 @@ module.exports = {
 async function getLikedRecipesByUserId(req, res) {
   try {
     const recipes = await db.getLikedRecipesByUserId(req.params.id);
+    res.status(200).json(recipes);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong, try again in a few minutes',
+      error
+    });
+  }
+}
+
+async function getLikedRecipesOfUserId(req, res) {
+  try {
+    const recipes = await db.getLikedRecipesOfUserId(req.params.id);
     res.status(200).json(recipes);
   } catch (error) {
     res.status(500).json({
