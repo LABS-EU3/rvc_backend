@@ -25,7 +25,7 @@ async function getIngredients(req, res) {
 
 async function updateIngredientByRecipeId(req, res) {
   try {
-    const ingredients = await dbRecipe.updateIngredientByRecipeId(
+    const ingredients = await db.updateIngredientByRecipeId(
       req.body,
       req.params.id
     );
@@ -40,7 +40,7 @@ async function updateIngredientByRecipeId(req, res) {
 
 async function addIngredientToRecipe(req, res) {
   try {
-    const ingredients = await dbRecipe.addIngredientToRecipe(
+    const ingredients = await db.addIngredientToRecipe(
       req.body,
       req.params.id
     );
@@ -54,7 +54,7 @@ async function addIngredientToRecipe(req, res) {
 }
 async function removeIngredientFromRecipe(req, res) {
   try {
-    const ingredient = await dbRecipe.removeIngredientFromRecipe(
+    const ingredient = await db.removeIngredientFromRecipe(
       req.body,
       req.params.id
     );
