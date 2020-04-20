@@ -4,7 +4,7 @@ const {
   getIngredients,
   updateIngredientByRecipeId,
   addIngredientToRecipe,
-  removeIngredientFromRecipe
+  removeIngredientFromRecipe,
 } = require('../controllers/ingredient-controllers');
 
 router.get('/', getIngredients);

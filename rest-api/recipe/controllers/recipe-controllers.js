@@ -7,7 +7,7 @@ module.exports = {
   getRecipeByUserId,
   postCloneWithID,
   addRecipe,
-  editRecipeInfo
+  editRecipeInfo,
 };
 
 async function getRecipes(req, res) {
@@ -21,7 +21,7 @@ async function getRecipes(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved recipes',
-      error
+      error,
     });
   }
 }
@@ -37,7 +37,7 @@ async function getRecipeByUserId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved recipes',
-      error
+      error,
     });
   }
 }
@@ -48,8 +48,8 @@ async function postCloneWithID(req, res) {
     res.status(200).json(recipe);
   } catch (error) {
     res.status(500).json({
-      message: 'There was an error getting the recipe of id ' + id,
-      error
+      message: `There was an error getting the recipe of id ${id}`,
+      error,
     });
   }
 }
@@ -60,8 +60,8 @@ async function getRecipeById(req, res) {
     res.status(200).json(recipe);
   } catch (error) {
     res.status(500).json({
-      message: 'There was an error getting the recipe of id ' + id,
-      error
+      message: `There was an error getting the recipe of id ${id}`,
+      error,
     });
   }
 }
@@ -73,7 +73,7 @@ async function addRecipe(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error creating the recipe',
-      error: errorHandler(error)
+      error: errorHandler(error),
     });
   }
 }
@@ -85,8 +85,8 @@ async function editRecipeInfo(req, res) {
     res.status(201).json(editRecipe);
   } catch (error) {
     res.status(500).json({
-      message: `update unsuccesful for id` + id,
-      error
+      message: `update unsuccesful for id${id}`,
+      error,
     });
   }
 }

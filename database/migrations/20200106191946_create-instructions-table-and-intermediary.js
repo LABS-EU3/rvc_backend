@@ -1,10 +1,10 @@
-exports.up = async function(knex) {
+exports.up = async function (knex) {
   await knex.schema
-    .createTable('instructions', tbl => {
+    .createTable('instructions', (tbl) => {
       tbl.increments();
       tbl.text('text').notNullable();
     })
-    .createTable('recipe_instructions', tbl => {
+    .createTable('recipe_instructions', (tbl) => {
       tbl
         .integer('recipe_id')
         .unsigned()
@@ -23,7 +23,7 @@ exports.up = async function(knex) {
     });
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
   await knex.schema
     .dropTableIfExists('recipe_instructions')
     .dropTableIfExists('instructions');

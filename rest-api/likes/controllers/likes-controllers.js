@@ -5,7 +5,7 @@ module.exports = {
   getLikedRecipesByUserId,
   getLikedRecipesOfUserId,
   postLikeRecipe,
-  deleteLike
+  deleteLike,
 };
 
 async function getLikedRecipesByUserId(req, res) {
@@ -15,7 +15,7 @@ async function getLikedRecipesByUserId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error
+      error,
     });
   }
 }
@@ -27,7 +27,7 @@ async function getLikedRecipesOfUserId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error
+      error,
     });
   }
 }
@@ -39,7 +39,7 @@ async function postLikeRecipe(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error: errorHandler(error)
+      error: errorHandler(error),
     });
   }
 }
@@ -51,7 +51,7 @@ async function deleteLike(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error
+      error,
     });
   }
 }

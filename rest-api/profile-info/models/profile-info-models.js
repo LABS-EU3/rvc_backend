@@ -4,7 +4,7 @@ module.exports = {
   findAllProfiles,
   findProfileByUserId,
   addProfile,
-  updateProfile
+  updateProfile,
 };
 
 async function findAllProfiles() {

@@ -6,13 +6,12 @@ const {
   getRecipeByUserId,
   postCloneWithID,
   addRecipe,
-  editRecipeInfo
+  editRecipeInfo,
 } = require('../controllers/recipe-controllers');
 const { validateId } = require('../middlewares/validateID');
 const { requiredFields } = require('../middlewares/requiredFields');
-const { emptyFields } = require('../middlewares/emptyFields'); // Has to be disabled until frontend supports all of the features
 const {
-  validateToken
+  validateToken,
 } = require('../../authentication/middlewares/validateToken');
 
 router.get('/', getRecipes);
@@ -20,7 +19,6 @@ router.get('/:id', validateId, getRecipeById);
 router.get('/user/:id', getRecipeByUserId);
 router.post('/:id', validateToken, validateId, postCloneWithID);
 router.post('/', validateToken, requiredFields, addRecipe);
-
 
 router.put('/:id/', editRecipeInfo);
 module.exports = router;

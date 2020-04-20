@@ -5,7 +5,7 @@ module.exports = {
   getLikedRecipesByUserId,
   getLikedRecipesOfUserId,
   insertLike,
-  deleteLike
+  deleteLike,
 };
 
 async function getLikesByRecipeID(id) {
@@ -55,7 +55,7 @@ async function getLikedRecipesByUserId(id) {
   for (recipe of recipes) {
     recipeWithLikes.push({
       ...recipe,
-      likes: await getLikesByRecipeID(recipe.id)
+      likes: await getLikesByRecipeID(recipe.id),
     });
   }
 
@@ -65,19 +65,14 @@ async function getLikedRecipesByUserId(id) {
 }
 
 async function insertLike(like) {
-  const [insert] = await db('likes')
-    .insert(like)
-    .returning('*');
+  const [insert] = await db('likes').insert(like).returning('*');
   return await userDb.getRecipeById(insert.recipe_id);
 }
 
 async function deleteLike(like) {
-  const insert = await db('likes')
-    .del()
-    .where(like);
+  const insert = await db('likes').del().where(like);
   if (insert) {
     return { isDeleted: true, message: 'Like removed' };
-  } else {
-    throw { isDeleted: false, message: 'Like was not removed' };
   }
+  throw { isDeleted: false, message: 'Like was not removed' };
 }

@@ -3,7 +3,7 @@ const db = require('../models/instructions-models');
 module.exports = {
   updateInstructionByRecipeId,
   deleteInstructionByRecipeId,
-  addInstructionByRecipeId
+  addInstructionByRecipeId,
 };
 
 async function addInstructionByRecipeId(req, res) {
@@ -13,7 +13,7 @@ async function addInstructionByRecipeId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved instructions',
-      error
+      error,
     });
   }
 }
@@ -25,7 +25,7 @@ async function updateInstructionByRecipeId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error updating the instruction.',
-      error
+      error,
     });
   }
 }
@@ -37,7 +37,7 @@ async function deleteInstructionByRecipeId(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error removing the instruction from the recipe.',
-      error: error
+      error,
     });
   }
 }

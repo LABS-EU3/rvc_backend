@@ -4,7 +4,7 @@ module.exports = {
   findAllCategories,
   findCategoryBy,
   addCategory,
-  editCategory
+  editCategory,
 };
 
 async function findAllCategories() {
@@ -20,9 +20,7 @@ async function findCategoryBy(info) {
 }
 
 async function addCategory(name) {
-  const [category] = await db('categories')
-    .returning('*')
-    .insert(name);
+  const [category] = await db('categories').returning('*').insert(name);
   return category;
 }
 
@@ -34,7 +32,6 @@ async function editCategory(id, body) {
 
   if (isUpdated) {
     return { message: 'Recipe information updated sucessfully.' };
-  } else {
-    throw { error: 'Recipe information not updated' };
   }
+  throw { error: 'Recipe information not updated' };
 }

@@ -3,7 +3,7 @@ const router = require('express').Router();
 const {
   updateInstructionByRecipeId,
   deleteInstructionByRecipeId,
-  addInstructionByRecipeId
+  addInstructionByRecipeId,
 } = require('../controllers/instructions-controllers');
 
 router.put('/:id', updateInstructionByRecipeId);

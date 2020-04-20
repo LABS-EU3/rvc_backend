@@ -1,19 +1,19 @@
-function requiredFields(req, res, next){
+function requiredFields(req, res, next) {
   const { body } = req;
   const missingFields = [];
-  if(!body.email){
-    missingFields.push('email')
-  } 
-  if(!body.username){
-    missingFields.push('username')
-  } 
-  if (!body.password){
-    missingFields.push('password')
+  if (!body.email) {
+    missingFields.push('email');
   }
-  if(!missingFields.length){
+  if (!body.username) {
+    missingFields.push('username');
+  }
+  if (!body.password) {
+    missingFields.push('password');
+  }
+  if (!missingFields.length) {
     next();
   } else {
-    res.status(400).json(`No values entered for: ${missingFields.join(", ")}`)
+    res.status(400).json(`No values entered for: ${missingFields.join(', ')}`);
   }
 }
 

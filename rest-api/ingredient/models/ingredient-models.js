@@ -6,7 +6,7 @@ module.exports = {
   addIngredient,
   removeIngredientFromRecipe,
   addIngredientToRecipe,
-  updateIngredientByRecipeId
+  updateIngredientByRecipeId,
 };
 
 async function findAllIngredients() {
@@ -22,16 +22,14 @@ async function findIngredientBy(info) {
 }
 
 async function addIngredient(name) {
-  const [ingredient] = await db('ingredients')
-    .returning('*')
-    .insert(name);
+  const [ingredient] = await db('ingredients').returning('*').insert(name);
   return ingredient;
 }
 
 async function removeIngredientFromRecipe(body, recipe_id) {
   const { index } = body;
 
-  return await db.transaction(async trx => {
+  return await db.transaction(async (trx) => {
     try {
       const recipeIngredientsIds = await trx('recipe_ingredients')
         .where('recipe_ingredients.recipe_id', recipe_id)
@@ -69,9 +67,7 @@ async function removeIngredientFromRecipe(body, recipe_id) {
           'units.name as unit'
         );
 
-      await trx('recipe_ingredients')
-        .where('recipe_ingredients.id', id)
-        .del();
+      await trx('recipe_ingredients').where('recipe_ingredients.id', id).del();
 
       // If the ingredient isn't featured in _any_ recipe, might as well delete it from the 'ingredients' table!
       const ingredientAppearances = await trx('recipe_ingredients').where(
@@ -80,14 +76,11 @@ async function removeIngredientFromRecipe(body, recipe_id) {
       );
 
       if (ingredientAppearances.length === 0) {
-        await trx('ingredients')
-          .where('ingredients.id', ingredient_id)
-          .del();
+        await trx('ingredients').where('ingredients.id', ingredient_id).del();
       }
 
       return ingredientToBeDeleted;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   });
@@ -96,7 +89,7 @@ async function removeIngredientFromRecipe(body, recipe_id) {
 async function addIngredientToRecipe(body, recipe_id) {
   const { name, quantity, unit_id } = body;
 
-  return await db.transaction(async trx => {
+  return await db.transaction(async (trx) => {
     try {
       // Similar thinking as above: need to check whether the ingredient already exists
       // in the 'ingredients' table before posting!
@@ -113,7 +106,7 @@ async function addIngredientToRecipe(body, recipe_id) {
           recipe_id,
           ingredient_id,
           quantity,
-          unit_id
+          unit_id,
         });
       } else {
         const [newIngredientId] = await trx('ingredients')
@@ -124,7 +117,7 @@ async function addIngredientToRecipe(body, recipe_id) {
           recipe_id,
           ingredient_id: newIngredientId,
           quantity,
-          unit_id
+          unit_id,
         });
       }
 
@@ -142,7 +135,6 @@ async function addIngredientToRecipe(body, recipe_id) {
           'units.name as unit'
         );
     } catch (err) {
-      console.log(err);
       throw err;
     }
   });
@@ -162,7 +154,7 @@ async function updateIngredientByRecipeId(body, recipe_id) {
 
   const { name, quantity, unit_id, index } = body;
 
-  return await db.transaction(async trx => {
+  return await db.transaction(async (trx) => {
     try {
       // Need to check whether _name_ already exists in the 'ingredients' table!
       const [ingredient_idObject] = await trx('ingredients as i')
@@ -216,7 +208,6 @@ async function updateIngredientByRecipeId(body, recipe_id) {
         .where('rI.recipe_id', recipe_id)
         .select('i.name', 'rI.quantity', 'u.name as unit');
     } catch (err) {
-      console.log(err);
       throw err;
     }
   });

@@ -1,5 +1,5 @@
-exports.up = async function(knex, Promise) {
-  await knex.schema.createTable('profile_info', tbl => {
+exports.up = async function (knex) {
+  await knex.schema.createTable('profile_info', (tbl) => {
     tbl.increments();
     tbl.string('profile_pic').notNullable();
     tbl.string('first_name').notNullable();
@@ -16,6 +16,6 @@ exports.up = async function(knex, Promise) {
   });
 };
 
-exports.down = async function(knex, Promise) {
+exports.down = async function (knex) {
   await knex.schema.dropTableIfExists('profile_info');
 };

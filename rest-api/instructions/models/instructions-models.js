@@ -3,20 +3,20 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   editInstruction,
   deleteInstruction,
-  addInstruction
+  addInstruction,
 };
 
 async function addInstruction(id, body) {
-  return await db.transaction(async trx => {
+  return await db.transaction(async (trx) => {
     try {
       const instructions = await trx('instructions')
         .insert(body)
         .returning('*');
 
-      const recipe_instructions_object = instructions.map(instruction => {
+      const recipe_instructions_object = instructions.map((instruction) => {
         return {
           instruction_id: instruction.id,
-          recipe_id: id
+          recipe_id: id,
         };
       });
 
@@ -26,11 +26,9 @@ async function addInstruction(id, body) {
 
       if (recipe_instructions.rowCount) {
         return { message: 'Instruction added sucessfully.' };
-      } else {
-        throw { error: 'Instruction not added' };
       }
+      throw { error: 'Instruction not added' };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   });
@@ -56,7 +54,7 @@ async function getSteps(id) {
 async function deleteInstruction(id, body) {
   const instructions = await getSteps(id);
 
-  const filtered = instructions.find(i => {
+  const filtered = instructions.find((i) => {
     if (i.step === body.step) {
       return i.id;
     }
@@ -69,15 +67,14 @@ async function deleteInstruction(id, body) {
 
   if (isDeleted) {
     return { message: 'Instruction deleted sucessfully.' };
-  } else {
-    throw { error: 'Instruction not deleted' };
   }
+  throw { error: 'Instruction not deleted' };
 }
 
 async function editInstruction(id, body) {
   const instructions = await getSteps(id);
 
-  const filtered = instructions.find(i => {
+  const filtered = instructions.find((i) => {
     if (i.step === body.step) {
       return i.id;
     }
@@ -89,7 +86,6 @@ async function editInstruction(id, body) {
 
   if (isUpdated) {
     return { message: 'Instruction updated sucessfully.' };
-  } else {
-    throw { error: 'Instruction not updated' };
   }
+  throw { error: 'Instruction not updated' };
 }

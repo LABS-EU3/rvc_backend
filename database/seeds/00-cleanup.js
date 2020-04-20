@@ -1,6 +1,6 @@
 const cleaner = require('knex-cleaner');
 
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   return knex('recipe_ingredients')
     .del()
     .then(() => knex('likes').del())
@@ -16,7 +16,7 @@ exports.seed = function(knex) {
         // deals with all other tables*
         mode: 'truncate',
         restartIdentity: true, // used to tell PostgresSQL to reset the ID counter
-        ignoreTables: ['knex_migrations', 'knex_migrations_lock']
+        ignoreTables: ['knex_migrations', 'knex_migrations_lock'],
       });
     });
 };

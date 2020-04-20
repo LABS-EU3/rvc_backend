@@ -2,7 +2,7 @@ const db = require('../models/category-models');
 
 module.exports = {
   getCategories,
-  editCategory
+  editCategory,
 };
 
 async function getCategories(req, res) {
@@ -16,7 +16,7 @@ async function getCategories(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved categories',
-      error
+      error,
     });
   }
 }
@@ -28,8 +28,8 @@ async function editCategory(req, res) {
     res.status(200).json(editCategory);
   } catch (error) {
     res.status(500).json({
-      message: `update unsuccesful for id` + id,
-      error
+      message: `update unsuccesful for id${id}`,
+      error,
     });
   }
 }

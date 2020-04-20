@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {
   getCategories,
-  editCategory
+  editCategory,
 } = require('../controllers/category-controllers');
 
 router.get('/', getCategories);

@@ -3,7 +3,7 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   findAllVideos,
   findVideoBy,
-  addVideo
+  addVideo,
 };
 
 async function findAllVideos() {
@@ -12,15 +12,11 @@ async function findAllVideos() {
 }
 
 async function findVideoBy(info) {
-  const video = await db('videos')
-    .where({ id: info })
-    .orWhere({ url: info });
+  const video = await db('videos').where({ id: info }).orWhere({ url: info });
   return video;
 }
 
 async function addVideo(url) {
-  const [video] = await db('videos')
-    .returning('*')
-    .insert(url);
+  const [video] = await db('videos').returning('*').insert(url);
   return video;
 }

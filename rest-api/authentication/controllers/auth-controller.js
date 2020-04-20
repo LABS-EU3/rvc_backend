@@ -7,7 +7,7 @@ async function register(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error
+      error,
     });
   }
 }
@@ -19,12 +19,12 @@ async function login(req, res) {
   } catch (error) {
     res.status(error.status || 500).json({
       message: 'Something went wrong, try again in a few minutes',
-      error: error.error
+      error: error.error,
     });
   }
 }
 
 module.exports = {
   register,
-  login
+  login,
 };

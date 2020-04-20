@@ -1,5 +1,5 @@
-exports.up = async function(knex) {
-  await knex.schema.createTable('likes', tbl => {
+exports.up = async function (knex) {
+  await knex.schema.createTable('likes', (tbl) => {
     tbl
       .integer('user_id')
       .unsigned()
@@ -20,6 +20,6 @@ exports.up = async function(knex) {
   });
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
   await knex.schema.dropTableIfExists('likes');
 };

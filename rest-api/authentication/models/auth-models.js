@@ -1,5 +1,6 @@
-const db = require('../../../database/dbConfig');
 const bcrypt = require('bcryptjs');
+
+const db = require('../../../database/dbConfig');
 const { generateToken } = require('../middlewares/generateToken');
 
 function register(user) {
@@ -22,19 +23,18 @@ function login(credentials) {
       .where('email', `${credentials.email}`)
       .orWhere('username', `${credentials.username}`)
       .first()
-      .then(user => {
+      .then((user) => {
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
           delete user.password;
           const token = generateToken(user);
           return { ...user, token };
-        } else {
-          throw { status: 401, error: 'Your email or password is incorrect' };
         }
+        throw { status: 401, error: 'Your email or password is incorrect' };
       })
   );
 }
 
 module.exports = {
   register,
-  login
+  login,
 };

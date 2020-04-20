@@ -4,7 +4,7 @@ function validateFields(req, res, next) {
   if (Object.entries(body).length !== 0 && body.constructor === Object) {
     for (entry in body) {
       if (typeof body[entry] !== 'string') {
-        invalidCount++;
+        invalidCount = invalidCount + 1;
       }
     }
 

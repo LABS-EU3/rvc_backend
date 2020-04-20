@@ -4,7 +4,7 @@ module.exports = {
   getAllProfiles,
   getProfileByUserId,
   createProfile,
-  editProfile
+  editProfile,
 };
 
 async function getAllProfiles(req, res) {
@@ -18,7 +18,7 @@ async function getAllProfiles(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved profiles',
-      error
+      error,
     });
   }
 }
@@ -30,13 +30,13 @@ async function getProfileByUserId(req, res) {
       res.status(200).json(profile);
     } else {
       res.status(404).json({
-        message: 'There is no profile for the user'
+        message: 'There is no profile for the user',
       });
     }
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved profile',
-      error
+      error,
     });
   }
 }
@@ -49,7 +49,7 @@ async function createProfile(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error creating the user profile',
-      error
+      error,
     });
   }
 }
@@ -65,7 +65,7 @@ async function editProfile(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error updating the user profile',
-      error
+      error,
     });
   }
 }

@@ -2,7 +2,7 @@ const db = require('../models/tag-models');
 
 module.exports = {
   getTags,
-  editTag
+  editTag,
 };
 
 async function getTags(req, res) {
@@ -16,7 +16,7 @@ async function getTags(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved tags',
-      error
+      error,
     });
   }
 }
@@ -24,12 +24,12 @@ async function getTags(req, res) {
 async function editTag(req, res) {
   const { id } = req.params;
   try {
-    const editTag = await db.editTag(id, req.body);
-    res.status(200).json(editTag);
+    const editTheTag = await db.editTag(id, req.body);
+    res.status(200).json(editTheTag);
   } catch (error) {
     res.status(500).json({
-      message: `update unsuccesful for id` + id,
-      error
+      message: `update unsuccesful for id ${id}`,
+      error,
     });
   }
 }

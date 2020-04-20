@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 
 function generateToken(data) {
   const payload = {
-    sub: data.id
+    sub: data.id,
   };
 
   const options = {
-    expiresIn: '60d'
+    expiresIn: '60d',
   };
 
   const secret = process.env.SECRET;

@@ -3,7 +3,6 @@ function errorHandler(error) {
     case '23505':
       return `You cannot vote twice for the same recipe`;
     default:
-      console.log(error);
       return error;
   }
 }

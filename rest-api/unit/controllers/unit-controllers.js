@@ -1,7 +1,7 @@
 const db = require('../models/unit-models');
 
 module.exports = {
-  getUnits
+  getUnits,
 };
 
 async function getUnits(req, res) {
@@ -15,7 +15,7 @@ async function getUnits(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved units',
-      error
+      error,
     });
   }
 }

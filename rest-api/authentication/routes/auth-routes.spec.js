@@ -4,26 +4,25 @@ const server = require('../../../api/server');
 function random(option) {
   const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
   let string = '';
-  for (var i = 0; i < 15; i++) {
+  for (let i = 0; i < 15; i++) {
     string += chars[Math.floor(Math.random() * chars.length)];
   }
   if (option === 'email') {
-    return string + '@email.com';
-  } else {
-    return string;
+    return `${string}@email.com`;
   }
+  return string;
 }
 
 const register = {
   email: random('email'),
   username: random(),
-  password: 'password'
+  password: 'password',
 };
 
 const unregistredAccount = {
   email: random('email'),
   username: random(),
-  password: 'password'
+  password: 'password',
 };
 
 // Add Register
@@ -35,7 +34,7 @@ describe('POST /api/auth/register', () => {
       .send(register)
       .expect(201)
       .expect('Content-Type', /json/)
-      .then(res => {
+      .then((res) => {
         expect(typeof res.body === 'object').toBe(true);
         expect(typeof res.body.username).toBe('string');
         expect(typeof res.body.id).toBe('number');
@@ -47,7 +46,7 @@ describe('POST /api/auth/register', () => {
       .post('/api/auth/register')
       .send()
       .expect(400)
-      .then(res => {
+      .then((res) => {
         expect(res.body.error).toBe('req.body is empty.');
       });
   });
@@ -58,7 +57,7 @@ describe('POST /api/auth/register', () => {
       .send({ ...register, username: 'somerandomusername' })
       .expect(400)
       .expect('Content-Type', /json/)
-      .then(res => {
+      .then((res) => {
         expect(res.body.error).toBe(
           `Email ${register.email} is already in use`
         );
@@ -71,7 +70,7 @@ describe('POST /api/auth/register', () => {
       .send({ ...register, email: 'testing@user.com' })
       .expect(400)
       .expect('Content-Type', /json/)
-      .then(res => {
+      .then((res) => {
         expect(res.body.error).toBe(
           `Username ${register.username} is already in use`
         );
@@ -87,7 +86,7 @@ describe('POST /api/auth/login', () => {
       .send(register)
       .expect(200)
       .expect('Content-Type', /json/)
-      .then(res => {
+      .then((res) => {
         expect(typeof res.body === 'object').toBe(true);
         expect(typeof res.body.username).toBe('string');
         expect(typeof res.body.id).toBe('number');
@@ -100,7 +99,7 @@ describe('POST /api/auth/login', () => {
       .send(unregistredAccount)
       .expect(200)
       .expect('Content-Type', /json/)
-      .then(res => {
+      .then((res) => {
         expect(res.body.error).toMatch('Your email or password is incorrect');
       });
   });

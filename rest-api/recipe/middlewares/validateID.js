@@ -1,7 +1,7 @@
 const db = require('../../../database/dbConfig');
 
 module.exports = {
-  validateId
+  validateId,
 };
 
 async function validateId(req, res, next) {
@@ -12,7 +12,7 @@ async function validateId(req, res, next) {
     } else {
       res
         .status(404)
-        .json({ message: 'There is no recipe with id ' + req.params.id });
+        .json({ message: `There is no recipe with id ${req.params.id}` });
     }
   } catch (error) {
     res

@@ -1,13 +1,11 @@
 const db = require('../../../database/dbConfig');
 
 async function checkExistingEmail(req, res, next) {
-  const email = req.body.email;
+  const { email } = req.body;
 
   try {
-    const emailExists = await db('users')
-      .select('email')
-      .where({ email });
-    if (!!emailExists.length) {
+    const emailExists = await db('users').select('email').where({ email });
+    if (!emailExists.length) {
       res.status(400).json({ error: `Email ${email} is already in use` });
     } else {
       next();
@@ -15,7 +13,7 @@ async function checkExistingEmail(req, res, next) {
   } catch (error) {
     res.status(500).json({
       error,
-      message: 'Something went wrong, please try again later'
+      message: 'Something went wrong, please try again later',
     });
   }
 }

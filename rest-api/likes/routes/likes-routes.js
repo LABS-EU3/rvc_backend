@@ -4,18 +4,43 @@ const {
   getLikedRecipesByUserId,
   getLikedRecipesOfUserId,
   postLikeRecipe,
-  deleteLike
+  deleteLike,
 } = require('../controllers/likes-controllers');
 
 const { checkRequired } = require('../middlewares/checkRequired');
-const { validateDataTypeParams } = require('../middlewares/validateDataTypeParams');
+const {
+  validateDataTypeParams,
+} = require('../middlewares/validateDataTypeParams');
 const { validateDataTypeBody } = require('../middlewares/validateDataTypeBody');
-const { validateToken } = require('../../authentication/middlewares/validateToken');
+const {
+  validateToken,
+} = require('../../authentication/middlewares/validateToken');
 
-
-router.get('/:id', validateToken, validateDataTypeParams, getLikedRecipesByUserId);
-router.get('/count/:id', validateToken, validateDataTypeParams, getLikedRecipesOfUserId);
-router.post('/', validateToken, validateDataTypeBody, checkRequired, postLikeRecipe);
-router.delete('/', validateToken, validateDataTypeBody, checkRequired, deleteLike);
+router.get(
+  '/:id',
+  validateToken,
+  validateDataTypeParams,
+  getLikedRecipesByUserId
+);
+router.get(
+  '/count/:id',
+  validateToken,
+  validateDataTypeParams,
+  getLikedRecipesOfUserId
+);
+router.post(
+  '/',
+  validateToken,
+  validateDataTypeBody,
+  checkRequired,
+  postLikeRecipe
+);
+router.delete(
+  '/',
+  validateToken,
+  validateDataTypeBody,
+  checkRequired,
+  deleteLike
+);
 
 module.exports = router;

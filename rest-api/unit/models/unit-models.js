@@ -3,7 +3,7 @@ const db = require('../../../database/dbConfig');
 module.exports = {
   findAllUnits,
   findUnitBy,
-  addUnit
+  addUnit,
 };
 
 async function findAllUnits() {
@@ -12,15 +12,11 @@ async function findAllUnits() {
 }
 
 async function findUnitBy(info) {
-  const unit = await db('units')
-    .where({ id: info })
-    .orWhere({ name: info });
+  const unit = await db('units').where({ id: info }).orWhere({ name: info });
   return unit;
 }
 
 async function addUnit(name) {
-  const [unit] = await db('units')
-    .returning('*')
-    .insert(name);
+  const [unit] = await db('units').returning('*').insert(name);
   return unit;
 }

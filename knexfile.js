@@ -7,14 +7,14 @@ module.exports = {
       port: process.env.DATABASE_DEV_PORT,
       database: process.env.DATABASE_DEV,
       user: process.env.DATABASE_DEV_USERNAME,
-      password: process.env.DATABASE_DEV_PASSWORD
+      password: process.env.DATABASE_DEV_PASSWORD,
     },
     migrations: {
-      directory: './database/migrations'
+      directory: './database/migrations',
     },
     seeds: {
-      directory: './database/seeds'
-    }
+      directory: './database/seeds',
+    },
   },
 
   testing: {
@@ -23,24 +23,24 @@ module.exports = {
       port: process.env.DATABASE_DEV_PORT,
       database: process.env.DATABASE_TEST,
       user: process.env.DATABASE_DEV_USERNAME,
-      password: process.env.DATABASE_DEV_PASSWORD
+      password: process.env.DATABASE_DEV_PASSWORD,
     },
     migrations: {
-      directory: './database/migrations'
+      directory: './database/migrations',
     },
     seeds: {
-      directory: './database/seeds'
-    }
+      directory: './database/seeds',
+    },
   },
 
   production: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './database/migrations'
+      directory: './database/migrations',
     },
     seeds: {
-      directory: './database/seeds'
-    }
-  }
+      directory: './database/seeds',
+    },
+  },
 };

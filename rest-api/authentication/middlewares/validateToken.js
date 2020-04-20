@@ -8,12 +8,10 @@ function validateToken(req, res, next) {
   if (token) {
     jwt.verify(token, jwtSecret, (err, decoded) => {
       if (err) {
-        res
-          .status(401)
-          .json({
-            error: err,
-            message: 'The token provided is not valid or has expired'
-          });
+        res.status(401).json({
+          error: err,
+          message: 'The token provided is not valid or has expired',
+        });
       } else {
         req.decoded = decoded;
         next();

@@ -4,7 +4,7 @@ module.exports = {
   getIngredients,
   updateIngredientByRecipeId,
   addIngredientToRecipe,
-  removeIngredientFromRecipe
+  removeIngredientFromRecipe,
 };
 
 async function getIngredients(req, res) {
@@ -18,7 +18,7 @@ async function getIngredients(req, res) {
   } catch (error) {
     res.status(500).json({
       message: 'There was an error retrieving the saved ingredients',
-      error
+      error,
     });
   }
 }
@@ -33,22 +33,19 @@ async function updateIngredientByRecipeId(req, res) {
   } catch (err) {
     res.status(500).json({
       message: 'There was an error updating the ingredient.',
-      error: errorHandler(err)
+      error: errorHandler(err),
     });
   }
 }
 
 async function addIngredientToRecipe(req, res) {
   try {
-    const ingredients = await db.addIngredientToRecipe(
-      req.body,
-      req.params.id
-    );
+    const ingredients = await db.addIngredientToRecipe(req.body, req.params.id);
     res.status(200).json(ingredients);
   } catch (err) {
     res.status(500).json({
       message: 'There was an error adding an ingredient to the recipe.',
-      error: errorHandler(err)
+      error: errorHandler(err),
     });
   }
 }
@@ -62,7 +59,7 @@ async function removeIngredientFromRecipe(req, res) {
   } catch (err) {
     res.status(500).json({
       message: 'There was an error removing the ingredient from the recipe.',
-      error: errorHandler(err)
+      error: errorHandler(err),
     });
   }
 }
